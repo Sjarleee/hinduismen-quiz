@@ -10,15 +10,23 @@ let allPossibleQuestions = [];
 let currentQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-const NUM_QUESTIONS_TO_ASK = 20;
+let NUM_QUESTIONS_TO_ASK = 20; // Kan justeres om ønskelig, men 20 er ok for alle størrelser
+let MAX_TABLE_NUMBER; // Vil bli satt i DOMContentLoaded
 
 function generateAllPossibleQuestions() {
     allPossibleQuestions = [];
-    for (let i = 1; i <= 20; i++) {
-        for (let j = 1; j <= 20; j++) {
+    if (typeof MAX_TABLE_NUMBER === 'undefined') {
+        console.error("MAX_TABLE_NUMBER er ikke definert! Bruker 20 som standard.");
+        MAX_TABLE_NUMBER = 20;
+    }
+
+    for (let i = 1; i <= MAX_TABLE_NUMBER; i++) {
+        for (let j = 1; j <= MAX_TABLE_NUMBER; j++) {
             const correctAnswer = i * j;
             const questionText = `Hva er ${i} x ${j}?`;
 
+            // Sikre at vi ikke har flere spørsmål enn unike kombinasjoner
+            
             let options = new Set();
             options.add(correctAnswer);
 
@@ -61,6 +69,11 @@ function generateAllPossibleQuestions() {
             });
         }
     }
+    // Juster NUM_QUESTIONS_TO_ASK hvis det er færre unike spørsmål enn 20
+    if (allPossibleQuestions.length < NUM_QUESTIONS_TO_ASK) {
+        NUM_QUESTIONS_TO_ASK = allPossibleQuestions.length;
+    }
+
 }
 
 function selectRandomQuestions() {
@@ -176,21 +189,35 @@ function startQuiz() {
     selectedAnswerValue = null;
     selectedButtonElement = null;
     
-    if (allPossibleQuestions.length === 0) {
-        generateAllPossibleQuestions();
-    }
+    // Regenerate questions based on MAX_TABLE_NUMBER every time a quiz starts
+    // This ensures that if a user navigates between different max_table quizzes,
+    // the correct set of questions is generated.
+    generateAllPossibleQuestions();
     selectRandomQuestions();
 
     quizContainer.style.display = 'block';
     scoreEl.style.display = 'none';
     feedbackEl.textContent = '';
     
-    nextButton.removeEventListener('click', handleNextButtonClick);
+    // Ensure the event listener is only added once or re-added correctly
+    nextButton.removeEventListener('click', handleNextButtonClick); // Remove previous if any
     nextButton.addEventListener('click', handleNextButtonClick);
     
     displayQuestion();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const defaultMaxTable = 20; // Standard hvis attributt mangler
+    const maxTableAttr = document.body.dataset.maxTable;
+    MAX_TABLE_NUMBER = maxTableAttr ? parseInt(maxTableAttr, 10) : defaultMaxTable;
+
+    // Oppdater hoved H1-tittelen på quiz-siden
+    const quizTitleElement = document.querySelector('.app-container > h1');
+    if (quizTitleElement) {
+        quizTitleElement.textContent = `Gangetabell Quiz (1-${MAX_TABLE_NUMBER})`;
+    }
+    // Oppdater også <title>-taggen i head for bedre visning i nettleserfanen
+    document.title = `Gangetabell Quiz (1-${MAX_TABLE_NUMBER})`;
+
     startQuiz();
 });
