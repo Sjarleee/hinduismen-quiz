@@ -15,39 +15,39 @@ let NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK; // Nåværende antall s
 let MAX_TABLE_NUMBER; // Vil bli satt i DOMContentLoaded
 
 const correctFeedbackMessages = [ // 15 stk
-    "Yes! Helt konge!",
-    "Du er jo helt rå på dette! High five!",
-    "Korrekt! Du er smartere enn en kalkulator!",
+    "Yes! Helt konge, Othilie! Mamma og Pappa blir så stolte!",
+    "Du er jo helt rå på dette, Othilie! High five fra Lilo & Stitch!",
+    "Korrekt! Du er smartere enn en kalkulator, og like glitrende som din favoritt-makeup!",
     "Boom! Rett i mål, som en perfekt trommesolo!",
-    "Du naila den! Like smooth som Sabrina Carpenter på scenen!",
-    "Ohana betyr familie, og familie betyr at ingen mattefeil blir igjen! Riktig!",
-    "Helt sjef! Du er jo en matte-rockestjerne!",
-    "Wooo! Du er on fire!",
-    "Riktig! Dette går jo som en drøm!",
-    "Perfekt! Du har 'Espresso'-fokus!",
-    "Du er jo et geni! Akkurat som Stitch... nesten!",
-    "Korrekt! Dette var lett som en plett!",
-    "Fantastisk! Du spiller førstefiolin i matte!",
-    "Nice! Du er like kul som Lilo med solbriller!",
-    "Spot on! Du er en matte-ninja!"
+    "Du naila den, Othilie! Like smooth som Sabrina Carpenter på scenen!",
+    "Ohana betyr familie, og familie betyr at Othilie alltid finner riktig svar! Perfekt!",
+    "Helt sjef, Othilie! Du er jo en matte-rockestjerne fra Rustad Skole!",
+    "Wooo! Du er on fire, Othilie! Oda B og Oda F heier på deg!",
+    "Riktig! Dette går jo som en drøm, like vakkert som en korsang!",
+    "Perfekt, Othilie! Du har 'Espresso'-fokus, akkurat som Sabrina!",
+    "Du er jo et geni, Othilie! Nesten like smart som Stitch (når han er snill)!",
+    "Korrekt! Dette var lett som en plett, og like gøy som å legge sminke!",
+    "Fantastisk, Othilie! Du spiller førstefiolin i matte, akkurat som i korpset!",
+    "Nice, Othilie! Du er like kul som Lilo med solbriller og like flink som Oda F!",
+    "Spot on, Othilie! Du er en matte-ninja, og Oda B ville vært imponert!"
 ];
 
 const incorrectFeedbackMessages = [ // 15 stk
-    "Oisann! Den var litt vrien, hva? Riktig svar var ",
-    "Næææh, ikke helt. Men neste gang, da sitter'n! Riktig svar var ",
-    "Ups! Selv Stitch gjør feil noen ganger. Riktig svar var ",
-    "Ikke helt i takt der, men øvelse gjør korpsmester! Riktig svar var ",
-    "Æsj, den glapp! Men du er fortsatt kul. Riktig svar var ",
-    "Hoopsi! Kanskje du trenger litt mer 'Feather'-lett tenking? Riktig svar var ",
-    "Den var litt kjip! Men ikke mist motet! Riktig svar var ",
-    "Bomma litt, men det er lov å prøve! Riktig svar var ",
-    "Nesten! Som å nesten treffe den høye C-en. Riktig svar var ",
-    "Ikke helt, men du er fortsatt en stjerne! Riktig svar var ",
-    "Den var litt tricky! Som en komplisert dans. Riktig svar var ",
-    "Auda! Men husk, alle kan lære! Riktig svar var ",
-    "Ikke denne gangen, men 'Nonsense'! Du klarer neste! Riktig svar var ",
-    "Oi, den gikk litt skeis! Som når Stitch prøver å bake. Riktig svar var ",
-    "Litt feil, men 'Hakuna Matata' – ingen bekymringer! Riktig svar var "
+    "Oisann, Othilie! Den var litt vrien, hva? Kanskje Mamma eller Pappa kan hjelpe? Riktig svar var ",
+    "Næææh, ikke helt, Othilie. Men neste gang, da sitter'n! Som en perfekt Sabrina Carpenter-sang! Riktig svar var ",
+    "Ups! Selv Stitch gjør feil noen ganger, Othilie. Ikke gi deg! Riktig svar var ",
+    "Ikke helt i takt der, Othilie, men øvelse gjør korpsmester! Riktig svar var ",
+    "Æsj, den glapp, Othilie! Men du er fortsatt like kul som Oda B. Riktig svar var ",
+    "Hoopsi! Kanskje du trenger litt mer 'Feather'-lett tenking, som Sabrina? Riktig svar var ",
+    "Den var litt kjip, Othilie! Men ikke mist motet, Rustad Skole heier på deg! Riktig svar var ",
+    "Bomma litt, Othilie, men det er lov å prøve! Like modig som Lilo! Riktig svar var ",
+    "Nesten, Othilie! Som å nesten treffe den høye C-en i koret. Riktig svar var ",
+    "Ikke helt, Othilie, men du er fortsatt en stjerne! Oda F vet du kan bedre! Riktig svar var ",
+    "Den var litt tricky, Othilie! Som en komplisert dans, eller en vanskelig sminkelook. Riktig svar var ",
+    "Auda, Othilie! Men husk, alle kan lære, selv på Rustad Skole! Riktig svar var ",
+    "Ikke denne gangen, Othilie, men 'Nonsense'! Du klarer neste, det vet Mamma og Pappa! Riktig svar var ",
+    "Oi, den gikk litt skeis, Othilie! Som når Stitch prøver å bake (eller gjøre matte). Riktig svar var ",
+    "Litt feil, Othilie, men 'Hakuna Matata' – ingen bekymringer! Du er like flink som Oda B og Oda F! Riktig svar var "
 ];
 
 function generateAllPossibleQuestions() {

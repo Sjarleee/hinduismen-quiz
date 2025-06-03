@@ -226,6 +226,72 @@
         let shuffledQuestions = [];
         let selectedAnswer = null;
 
+        const correctFeedbackMessages = [
+            "Victory Royale, Edward! Helt riktig!",
+            "Du er helt cracked, Edward! Spot on!",
+            "Easy W, Edward! Den satt!",
+            "GG, Edward! Du er jo goated på dette!",
+            "Den looten var prima, Edward! Korrekt!",
+            "Du clutcha den, Edward! Imponerende!",
+            "Full pott, Edward! Som å bokse en fisk!",
+            "Rett i boksen, Edward! Perfekt svar!",
+            "Du er ikke default, Edward! Strålende!",
+            "Den satt som et headshot, Edward! Riktig!",
+            "Du bygger deg til seier, Edward! Korrekt!",
+            "High ground på kunnskap, Edward! Rett svar!",
+            "Du har shield på max, Edward! Helt riktig!",
+            "Som å finne en gull SCAR, Edward! Perfekt!",
+            "Du er on fire, Edward! Akkurat det!",
+            "Ingen storm her, Edward! Klart og riktig!",
+            "Du er en ekte squad leader, Edward! Viser vei med riktig svar!",
+            "Den der var like smooth som en 90-crank, Edward! Korrekt!",
+            "Du traff bullseye, Edward! Rett på!",
+            "Du er i sonen, Edward! Helt riktig!",
+            "Som å lande på favorittstedet og få all looten, Edward! Perfekt!",
+            "Du er ikke lost, Edward! Helt rett!",
+            "Du har kartet og kompasset, Edward! Korrekt!",
+            "Den var like klar som en Chug Jug, Edward! Riktig!",
+            "Du er en mesterbygger av kunnskap, Edward! Helt rett!",
+            "Ingen bush camper her, Edward! Rett frem og riktig!",
+            "Du har sikret deg en Victory Crown med det svaret, Edward!",
+            "Det der var en episk seier, Edward! Korrekt!",
+            "Du er klar for FNCS, Edward! Helt riktig!",
+            "Du er en legende, Edward! Rett svar!"
+        ];
+
+        const incorrectFeedbackMessages = [
+            "Oof, Edward! Den var litt default. Riktig svar var: ",
+            "Du ble lasered der, Edward! Bedre lykke neste runde. Riktig: ",
+            "Nesten, Edward, men du tok storm damage! Riktig svar er: ",
+            "Du er litt lost i stormen, Edward! Her er riktig vei: ",
+            "Det var en mislykket landing, Edward. Riktig svar var: ",
+            "Du trenger en reboot, Edward! Riktig svar: ",
+            "Auda, Edward! Rett i fella. Det korrekte var: ",
+            "Som å gå tom for mats i en build fight, Edward! Riktig svar: ",
+            "Den der var litt off-meta, Edward. Prøv dette: ",
+            "Du ble one-shot der, Edward! Riktig svar var: ",
+            "Ikke helt Victory Royale, Edward. Riktig svar: ",
+            "Du campet litt for lenge i busken, Edward! Riktig er: ",
+            "GG, men feil lag vant, Edward. Riktig svar: ",
+            "Du trenger litt mer slurp juice for den der, Edward! Riktig: ",
+            "Den looten var common, Edward. Vi siktet på legendary! Riktig svar: ",
+            "Du ble outplayed, Edward! Her er riktig strategi: ",
+            "Tilbake til lobbyen med den, Edward. Riktig svar var: ",
+            "Du traff ikke helt skuddet, Edward. Riktig mål var: ",
+            "Stormen tok deg, Edward! Riktig svar: ",
+            "Det var som å finne bare grå våpen, Edward. Riktig svar er: ",
+            "Du trenger en bedre drop spot, Edward! Riktig svar: ",
+            "Ikke helt goated der, Edward. Riktig svar var: ",
+            "Du ble eliminert, Edward! Men her er info for neste match: ",
+            "Den taktikken funka ikke, Edward. Riktig svar: ",
+            "Du er utenfor sonen, Edward! Kom deg hit: ",
+            "Det var en L, Edward. Men neste blir en W! Riktig svar: ",
+            "Du glemte å bygge, Edward! Riktig svar var: ",
+            "Som å bli tredje partied, Edward! Uflaks. Riktig svar: ",
+            "Du trenger å farme litt mer kunnskap, Edward! Riktig svar: ",
+            "Den der var litt sus, Edward. Riktig svar er: "
+        ];
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -313,10 +379,17 @@
 
             if (isCorrect) {
                 score++;
-                feedbackAreaEl.textContent = "Riktig!";
+                const randomIndex = Math.floor(Math.random() * correctFeedbackMessages.length);
+                feedbackAreaEl.textContent = correctFeedbackMessages[randomIndex];
                 feedbackAreaEl.className = 'feedback correct';
             } else {
-                feedbackAreaEl.textContent = `Feil. Riktig svar var: ${currentQuestion.answer}`;
+                const randomIndex = Math.floor(Math.random() * incorrectFeedbackMessages.length);
+                // For de meldingene som er laget for å inkludere det riktige svaret:
+                if (incorrectFeedbackMessages[randomIndex].includes(": ")) {
+                    feedbackAreaEl.textContent = incorrectFeedbackMessages[randomIndex] + currentQuestion.answer;
+                } else {
+                    feedbackAreaEl.textContent = incorrectFeedbackMessages[randomIndex] + ` Riktig svar var: ${currentQuestion.answer}`;
+                }
                 feedbackAreaEl.className = 'feedback incorrect';
             }
         }
