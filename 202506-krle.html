@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hinduismen Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 95vh;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 650px;
+        }
+        h1 {
+            text-align: center;
+            color: #d9534f; /* En passende farge for temaet */
+            margin-bottom: 20px;
+        }
+        .question-area, .result-area {
+            margin-bottom: 20px;
+        }
+        #question-number {
+            font-size: 0.9em;
+            color: #777;
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        .question-text {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #444;
+            line-height: 1.4;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1em;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .options button:hover:not(:disabled) {
+            background-color: #e9e9e9;
+            border-color: #ccc;
+        }
+        .options button.selected {
+            background-color: #ffe0b2; /* Oransje-aktig for valgt */
+            border-color: #ffb74d;
+        }
+        .options button.correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+        .options button.incorrect {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+            font-weight: bold;
+        }
+        .options button:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .navigation {
+            margin-top: 25px;
+            text-align: center;
+        }
+        .navigation button {
+            padding: 12px 25px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s;
+        }
+        .navigation button:hover {
+            background-color: #c9302c;
+        }
+        .navigation button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .hidden {
+            display: none;
+        }
+        #score-text {
+            font-size: 1.5em;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Hinduismen Quiz for 7. trinn</h1>
+
+        <div id="quiz-area">
+            <div class="question-area">
+                <p id="question-number"></p>
+                <p id="question-text" class="question-text"></p>
+                <div id="options-container" class="options">
+                    <!-- Alternativer lastes her -->
+                </div>
+            </div>
+            <div id="feedback-area" class="feedback hidden"></div>
+            <div class="navigation">
+                <button id="submit-btn" disabled>Send inn svar</button>
+                <button id="next-btn" class="hidden">Neste spørsmål</button>
+            </div>
+        </div>
+
+        <div id="result-area" class="result-area hidden">
+            <h2 id="score-text"></h2>
+            <div class="navigation">
+                <button id="restart-btn">Start på nytt</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "Hva heter den eldste av verdensreligionene?", options: ["Kristendommen", "Islam", "Hinduismen", "Buddhismen"], answer: "Hinduismen" },
+            { question: "Hva betyr ordet 'karma'?", options: ["Skjebne", "Handling", "Gjenfødsel", "Meditasjon"], answer: "Handling" },
+            { question: "Hva er samsara?", options: ["En gud", "En hellig bok", "Syklusen av fødsel, død og gjenfødsel", "En type meditasjon"], answer: "Syklusen av fødsel, død og gjenfødsel" },
+            { question: "Hva er målet for mange hinduer – å slippe ut av gjenfødelsens sirkel?", options: ["Nirvana", "Moksha", "Karma", "Dharma"], answer: "Moksha" },
+            { question: "Hva er brahman?", options: ["En gud", "En hellig bok", "Den guddommelige kraften", "En type meditasjon"], answer: "Den guddommelige kraften" },
+            { question: "Hva er en asket?", options: ["En prest", "En person som trekker seg tilbake fra samfunnet for å meditere", "En gud", "En type meditasjon"], answer: "En person som trekker seg tilbake fra samfunnet for å meditere" },
+            { question: "Hva er en guru?", options: ["En prest", "En gud", "En åndelig lærer", "En type meditasjon"], answer: "En åndelig lærer" },
+            { question: "Hva er puja?", options: ["En hellig bok", "En type meditasjon", "Et ritual der man tilber en gud", "En gud"], answer: "Et ritual der man tilber en gud" },
+            { question: "Hva er et mantra?", options: ["En hellig bok", "En type meditasjon", "En hellig lyd eller ord", "En gud"], answer: "En hellig lyd eller ord" },
+            { question: "Hva er en hellig elv i hinduismen?", options: ["Nilen", "Amazonas", "Ganges", "Yangtze"], answer: "Ganges" },
+            { question: "Hvem er Vishnu?", options: ["En prest", "En gud", "En hellig bok", "En type meditasjon"], answer: "En gud" },
+            { question: "Hvem er Shiva?", options: ["En prest", "En gud", "En hellig bok", "En type meditasjon"], answer: "En gud" },
+            { question: "Hvem er Krishna?", options: ["En prest", "En gud", "En hellig bok", "En type meditasjon"], answer: "En gud" },
+            { question: "Hvem er Ganesha?", options: ["En prest", "En gud", "En hellig bok", "En type meditasjon"], answer: "En gud" },
+            { question: "Hva symboliserer Shivas blå hals?", options: ["Visdom", "Gift", "Kjærlighet", "Meditasjon"], answer: "Gift" },
+            { question: "Hvem er Radha?", options: ["En prest", "En gud", "Krishnas kjæreste", "En type meditasjon"], answer: "Krishnas kjæreste" },
+            { question: "Hva er en avatar i hinduismen?", options: ["En prest", "En gud", "En hellig bok", "En guds nedstigning til jorden"], answer: "En guds nedstigning til jorden" },
+            { question: "Hva er en gudinne i hinduismen som bekjemper demoner?", options: ["Lakshmi", "Saraswati", "Durga", "Parvati"], answer: "Durga" },
+            { question: "Hva er Upanishadene?", options: ["En prest", "En gud", "En hellig bok", "En type meditasjon"], answer: "En hellig bok" },
+            { question: "Hva lærer faren sønnen i historien med salt og vann?", options: ["Om karma", "Om brahman", "Om samsara", "Om puja"], answer: "Om brahman" },
+            { question: "Hva handler Bhagavadgita om?", options: ["En strid mellom to slekter", "En prest", "En hellig bok", "En type meditasjon"], answer: "En strid mellom to slekter" },
+            { question: "Hvem var Mira Bai?", options: ["En prest", "En gud", "En hellig bok", "En prinsesse som elsket Krishna"], answer: "En prinsesse som elsket Krishna" },
+            { question: "Hva er en purana?", options: ["En prest", "En gud", "En hellig bok", "En type meditasjon"], answer: "En hellig bok" },
+            { question: "Hva skjer under en puja-seremoni?", options: ["Man mediterer", "Man tilber en gud med ofringer", "Man leser en hellig bok", "Man synger"], answer: "Man tilber en gud med ofringer" },
+            { question: "Hvorfor gir hinduer blomster og frukt til gudene?", options: ["For å få god karma", "For å vise respekt", "For å meditere", "For å lese hellige bøker"], answer: "For å vise respekt" },
+            { question: "Hva er det viktigste øyeblikket i puja?", options: ["Når man mediterer", "Når man ser inn i øynene på statuen", "Når man synger", "Når man leser hellige bøker"], answer: "Når man ser inn i øynene på statuen" },
+            { question: "Hvorfor tar mange hinduer et bad i elva Ganges?", options: ["For å få god karma", "For å vise respekt", "For å rense seg rituelt", "For å meditere"], answer: "For å rense seg rituelt" },
+            { question: "Hva er rituell renhet?", options: ["Å meditere", "Å lese hellige bøker", "Å være ren for å delta i religiøse ritualer", "Å få god karma"], answer: "Å være ren for å delta i religiøse ritualer" },
+            { question: "Hva slags mat regnes som urent i hinduismen?", options: ["Grønnsaker", "Melkeprodukter", "Kjøtt og alkohol", "Frukt"], answer: "Kjøtt og alkohol" },
+            { question: "Hva gjør mange hinduer før de begynner på skole eller ny jobb?", options: ["Mediterer", "Ber til Ganesha", "Leser hellige bøker", "Synger"], answer: "Ber til Ganesha" },
+            { question: "Hva er erkjennelsens vei?", options: ["Å forstå at sjelen er ett med brahman", "Å utføre sine plikter", "Å vise hengivenhet til en gud", "Å meditere"], answer: "Å forstå at sjelen er ett med brahman" },
+            { question: "Hva er handlingens vei?", options: ["Å forstå at sjelen er ett med brahman", "Å utføre sine plikter uten å forvente belønning", "Å vise hengivenhet til en gud", "Å meditere"], answer: "Å utføre sine plikter uten å forvente belønning" },
+            { question: "Hva er kjærlighetens vei?", options: ["Å forstå at sjelen er ett med brahman", "Å utføre sine plikter", "Å vise hengivenhet til en gud", "Å meditere"], answer: "Å vise hengivenhet til en gud" },
+            { question: "Hvem kan følge kjærlighetens vei?", options: ["Asketer", "Prester", "Alle", "Guder"], answer: "Alle" },
+            { question: "Hvorfor er kjærlighetens vei populær blant folk flest?", options: ["Den er enkel", "Den er vanskelig", "Den krever meditasjon", "Den krever å lese hellige bøker"], answer: "Den er enkel" },
+            { question: "Hva betyr det å erkjenne noe?", options: ["Å forstå noe på en dyp og grundig måte", "Å meditere", "Å lese hellige bøker", "Å få god karma"], answer: "Å forstå noe på en dyp og grundig måte" },
+            { question: "Hva er forskjellen på å forstå og å erkjenne?", options: ["Ingen forskjell", "Å forstå er overfladisk, å erkjenne er dypt", "Å erkjenne er overfladisk, å forstå er dypt", "Å meditere"], answer: "Å forstå er overfladisk, å erkjenne er dypt" },
+            { question: "Hva tror hinduer skjer etter døden?", options: ["Man kommer til himmelen", "Man blir gjenfødt", "Man blir en gud", "Man mediterer"], answer: "Man blir gjenfødt" },
+            { question: "Hvordan kan man få god karma?", options: ["Ved å meditere", "Ved å utføre gode handlinger", "Ved å lese hellige bøker", "Ved å tilbe guder"], answer: "Ved å utføre gode handlinger" },
+            { question: "Hva skjer hvis man får dårlig karma?", options: ["Man kommer til himmelen", "Man blir gjenfødt i et dårligere liv", "Man blir en gud", "Man mediterer"], answer: "Man blir gjenfødt i et dårligere liv" },
+            { question: "Hvor bor de fleste hinduer i dag?", options: ["USA", "India", "Norge", "Australia"], answer: "India" },
+            { question: "Hvor mange hinduer bor det omtrent i Norge?", options: ["10 000", "20 000", "30 000", "40 000"], answer: "20 000" },
+            { question: "Hva er et minitempel?", options: ["Et lite tempel hjemme", "En stor tempelby", "En hellig bok", "En type meditasjon"], answer: "Et lite tempel hjemme" },
+            { question: "Hva er Diwali?", options: ["En hellig bok", "En type meditasjon", "En lysfestival", "En gud"], answer: "En lysfestival" },
+            { question: "Hvorfor er kua hellig i hinduismen?", options: ["Den gir melk", "Den gir god karma", "Den er et symbol på livet", "Den er en gud"], answer: "Den er et symbol på livet" },
+            { question: "Kjenner du noen som praktiserer yoga? Hvorfor gjør de det?", options: ["For å få god karma", "For å meditere", "For å få bedre helse", "For å lese hellige bøker"], answer: "For å få bedre helse" },
+            { question: "Har du noen gang prøvd å meditere? Hvordan føltes det?", options: ["Vanskelig", "Lett", "Avslappende", "Stressende"], answer: "Avslappende" },
+            { question: "Har du eller familien din noen ritualer dere gjør sammen?", options: ["Ja", "Nei", "Kanskje", "Vet ikke"], answer: "Ja" },
+            { question: "Hva synes du om tanken på karma – at gode handlinger gir gode konsekvenser?", options: ["Bra", "Dårlig", "Vet ikke", "Ingen mening"], answer: "Bra" },
+            { question: "Hva kan vi lære av hinduismen om respekt for natur og andre mennesker?", options: ["Ingenting", "Mye", "Litt", "Vet ikke"], answer: "Mye" }
+        ];
+
+        const quizAreaEl = document.getElementById('quiz-area');
+        const resultAreaEl = document.getElementById('result-area');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const feedbackAreaEl = document.getElementById('feedback-area');
+        const submitBtnEl = document.getElementById('submit-btn');
+        const nextBtnEl = document.getElementById('next-btn');
+        const scoreTextEl = document.getElementById('score-text');
+        const restartBtnEl = document.getElementById('restart-btn');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+        let selectedAnswer = null;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            shuffledQuestions = [...questions];
+            shuffleArray(shuffledQuestions);
+            
+            quizAreaEl.classList.remove('hidden');
+            resultAreaEl.classList.add('hidden');
+            submitBtnEl.classList.remove('hidden');
+            submitBtnEl.disabled = true;
+            nextBtnEl.classList.add('hidden');
+            feedbackAreaEl.classList.add('hidden');
+            feedbackAreaEl.textContent = '';
+            
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                const currentQuestion = shuffledQuestions[currentQuestionIndex];
+                questionNumberEl.textContent = `Spørsmål ${currentQuestionIndex + 1} av ${shuffledQuestions.length}`;
+                questionTextEl.textContent = currentQuestion.question;
+                optionsContainerEl.innerHTML = '';
+                selectedAnswer = null;
+
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => selectOption(button, option);
+                    optionsContainerEl.appendChild(button);
+                });
+                
+                submitBtnEl.disabled = true;
+                submitBtnEl.classList.remove('hidden');
+                nextBtnEl.classList.add('hidden');
+                feedbackAreaEl.classList.add('hidden');
+                feedbackAreaEl.className = 'feedback hidden';
+            } else {
+                showResults();
+            }
+        }
+
+        function selectOption(buttonEl, option) {
+            const allOptionButtons = optionsContainerEl.getElementsByTagName('button');
+            for (let btn of allOptionButtons) {
+                btn.classList.remove('selected');
+            }
+            buttonEl.classList.add('selected');
+            selectedAnswer = option;
+            submitBtnEl.disabled = false;
+        }
+
+        function handleSubmit() {
+            if (selectedAnswer === null) return;
+
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === currentQuestion.answer;
+
+            feedbackAreaEl.classList.remove('hidden');
+            submitBtnEl.classList.add('hidden');
+            nextBtnEl.classList.remove('hidden');
+
+            const optionButtons = Array.from(optionsContainerEl.getElementsByTagName('button'));
+            optionButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === currentQuestion.answer) {
+                    btn.classList.add('correct');
+                }
+                if (btn.textContent === selectedAnswer && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+                // Fjerner 'selected' klassen da 'correct'/'incorrect' er mer spesifikk
+                if (btn.textContent === selectedAnswer) {
+                    btn.classList.remove('selected');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                feedbackAreaEl.textContent = "Riktig!";
+                feedbackAreaEl.className = 'feedback correct';
+            } else {
+                feedbackAreaEl.textContent = `Feil. Riktig svar var: ${currentQuestion.answer}`;
+                feedbackAreaEl.className = 'feedback incorrect';
+            }
+        }
+
+        function handleNextQuestion() {
+            currentQuestionIndex++;
+            selectedAnswer = null;
+            feedbackAreaEl.classList.add('hidden');
+            feedbackAreaEl.textContent = '';
+            nextBtnEl.classList.add('hidden');
+            submitBtnEl.classList.remove('hidden');
+            
+            displayQuestion();
+        }
+
+        function showResults() {
+            quizAreaEl.classList.add('hidden');
+            resultAreaEl.classList.remove('hidden');
+            scoreTextEl.textContent = `Du fikk ${score} av ${shuffledQuestions.length} riktige!`;
+        }
+
+        submitBtnEl.addEventListener('click', handleSubmit);
+        nextBtnEl.addEventListener('click', handleNextQuestion);
+        restartBtnEl.addEventListener('click', startQuiz);
+
+        startQuiz(); // Start quizen når siden lastes
+    </script>
+</body>
+</html>
