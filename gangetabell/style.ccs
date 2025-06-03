@@ -1,0 +1,123 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.app-container {
+    background-color: white;
+    padding: 25px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 550px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+#question-counter {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#question {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    color: #2c3e50;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.option-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.option-btn:hover:not(:disabled) {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.option-btn:active:not(:disabled) {
+    transform: translateY(0px);
+}
+
+.option-btn.selected {
+    background-color: #2980b9;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #2980b9;
+}
+
+.option-btn.correct {
+    background-color: #2ecc71 !important;
+    color: white;
+}
+
+.option-btn.incorrect {
+    background-color: #e74c3c !important;
+    color: white;
+}
+
+.option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+#feedback {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 1.15em;
+    font-weight: bold;
+    min-height: 1.5em; 
+}
+
+#next-btn, #restart-btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.05em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.2s ease;
+}
+
+#next-btn:hover, #restart-btn:hover {
+    background-color: #219d55;
+}
+
+#score-container h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+#score-container p {
+    font-size: 1.25em;
+    color: #555;
+    margin-bottom: 25px;
+}

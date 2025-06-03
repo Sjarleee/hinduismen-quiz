@@ -26,6 +26,19 @@
             max-width: 600px;
             text-align: center;
         }
+        .home-link {
+            display: block;
+            text-align: center; /* Eller left/right om du foretrekker */
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            color: #d9534f; /* Bruker samme farge som quiz-knappene for konsistens */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .home-link:hover {
+            color: #c9302c; /* Mørkere nyanse ved hover */
+            text-decoration: underline;
+        }
         h1 {
             color: #333;
             margin-bottom: 30px;
@@ -48,6 +61,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="index.html" class="home-link">Hjem</a>
         <h1>Velg en Quiz</h1>
         <div class="quiz-list">
             <a href="202506-krle.html">Hinduismen Quiz (7. trinn)</a>
