@@ -14,6 +14,42 @@ const DEFAULT_NUM_QUESTIONS_TO_ASK = 20; // Standard antall spørsmål å forsø
 let NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK; // Nåværende antall spørsmål for denne quizen
 let MAX_TABLE_NUMBER; // Vil bli satt i DOMContentLoaded
 
+const correctFeedbackMessages = [ // 15 stk
+    "Yes! Helt konge!",
+    "Du er jo helt rå på dette! High five!",
+    "Korrekt! Du er smartere enn en kalkulator!",
+    "Boom! Rett i mål, som en perfekt trommesolo!",
+    "Du naila den! Like smooth som Sabrina Carpenter på scenen!",
+    "Ohana betyr familie, og familie betyr at ingen mattefeil blir igjen! Riktig!",
+    "Helt sjef! Du er jo en matte-rockestjerne!",
+    "Wooo! Du er on fire!",
+    "Riktig! Dette går jo som en drøm!",
+    "Perfekt! Du har 'Espresso'-fokus!",
+    "Du er jo et geni! Akkurat som Stitch... nesten!",
+    "Korrekt! Dette var lett som en plett!",
+    "Fantastisk! Du spiller førstefiolin i matte!",
+    "Nice! Du er like kul som Lilo med solbriller!",
+    "Spot on! Du er en matte-ninja!"
+];
+
+const incorrectFeedbackMessages = [ // 15 stk
+    "Oisann! Den var litt vrien, hva? Riktig svar var ",
+    "Næææh, ikke helt. Men neste gang, da sitter'n! Riktig svar var ",
+    "Ups! Selv Stitch gjør feil noen ganger. Riktig svar var ",
+    "Ikke helt i takt der, men øvelse gjør korpsmester! Riktig svar var ",
+    "Æsj, den glapp! Men du er fortsatt kul. Riktig svar var ",
+    "Hoopsi! Kanskje du trenger litt mer 'Feather'-lett tenking? Riktig svar var ",
+    "Den var litt kjip! Men ikke mist motet! Riktig svar var ",
+    "Bomma litt, men det er lov å prøve! Riktig svar var ",
+    "Nesten! Som å nesten treffe den høye C-en. Riktig svar var ",
+    "Ikke helt, men du er fortsatt en stjerne! Riktig svar var ",
+    "Den var litt tricky! Som en komplisert dans. Riktig svar var ",
+    "Auda! Men husk, alle kan lære! Riktig svar var ",
+    "Ikke denne gangen, men 'Nonsense'! Du klarer neste! Riktig svar var ",
+    "Oi, den gikk litt skeis! Som når Stitch prøver å bake. Riktig svar var ",
+    "Litt feil, men 'Hakuna Matata' – ingen bekymringer! Riktig svar var "
+];
+
 function generateAllPossibleQuestions() {
     allPossibleQuestions = [];
     if (typeof MAX_TABLE_NUMBER === 'undefined') {
@@ -156,11 +192,13 @@ function handleNextButtonClick() {
 
         if (selectedAnswerValue === correctAnswer) {
             score++;
-            feedbackEl.textContent = "Riktig!";
+            const randomCorrectMsg = correctFeedbackMessages[Math.floor(Math.random() * correctFeedbackMessages.length)];
+            feedbackEl.textContent = randomCorrectMsg;
             feedbackEl.style.color = "#2ecc71"; // Green
             if (selectedButtonElement) selectedButtonElement.classList.add('correct'); // Ensure selected is also marked
         } else {
-            feedbackEl.textContent = `Feil. Riktig svar var ${correctAnswer}.`;
+            const randomIncorrectMsg = incorrectFeedbackMessages[Math.floor(Math.random() * incorrectFeedbackMessages.length)];
+            feedbackEl.textContent = `${randomIncorrectMsg}${randomIncorrectMsg.includes("var ") ? correctAnswer : " " + correctAnswer}.`;
             feedbackEl.style.color = "#e74c3c"; // Red
             if (selectedButtonElement) selectedButtonElement.classList.add('incorrect');
         }
