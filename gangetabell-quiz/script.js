@@ -10,7 +10,8 @@ let allPossibleQuestions = [];
 let currentQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-let NUM_QUESTIONS_TO_ASK = 20; // Kan justeres om ønskelig, men 20 er ok for alle størrelser
+const DEFAULT_NUM_QUESTIONS_TO_ASK = 20; // Standard antall spørsmål å forsøke å stille
+let NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK; // Nåværende antall spørsmål for denne quizen
 let MAX_TABLE_NUMBER; // Vil bli satt i DOMContentLoaded
 
 function generateAllPossibleQuestions() {
@@ -23,7 +24,14 @@ function generateAllPossibleQuestions() {
     for (let i = 1; i <= MAX_TABLE_NUMBER; i++) {
         for (let j = 1; j <= MAX_TABLE_NUMBER; j++) {
             const correctAnswer = i * j;
-            const questionText = `Hva er ${i} x ${j}?`;
+            let questionText = `Hva er ${i} x ${j}?`;
+
+            // Legg til visuell representasjon for 1-5 tabellen
+            if (MAX_TABLE_NUMBER <= 5) {
+                const visual_i = '●'.repeat(i);
+                const visual_j = '●'.repeat(j);
+                questionText += `<br><span class="visual-math">${visual_i} x ${visual_j}</span>`;
+            }
 
             // Sikre at vi ikke har flere spørsmål enn unike kombinasjoner
             
@@ -91,7 +99,8 @@ function shuffleArray(array) {
 function displayQuestion() {
     if (currentQuestionIndex < currentQuestions.length) {
         const q = currentQuestions[currentQuestionIndex];
-        questionEl.textContent = q.text;
+        // Bruk innerHTML for å rendre <br> og <span> for visuell representasjon
+        questionEl.innerHTML = q.text; 
         questionCounterEl.textContent = `Spørsmål ${currentQuestionIndex + 1} av ${currentQuestions.length}`;
         optionsEl.innerHTML = '';
         feedbackEl.textContent = '';
@@ -184,6 +193,7 @@ function showResults() {
 }
 
 function startQuiz() {
+    NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK; // Nullstill til standard for hver nye quiz
     currentQuestionIndex = 0;
     score = 0;
     selectedAnswerValue = null;
