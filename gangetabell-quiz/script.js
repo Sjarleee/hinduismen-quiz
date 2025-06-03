@@ -14,7 +14,7 @@ const DEFAULT_NUM_QUESTIONS_TO_ASK = 20; // Standard antall spørsmål å forsø
 let NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK; // Nåværende antall spørsmål for denne quizen
 let MAX_TABLE_NUMBER; // Vil bli satt i DOMContentLoaded
 
-const correctFeedbackMessages = [ // 15 stk
+let correctFeedbackMessages = [ // 15 stk
     "Yes! Helt konge, Othilie! Mamma og Pappa blir så stolte!",
     "Du er jo helt rå på dette, Othilie! High five fra Lilo & Stitch!",
     "Korrekt! Du er smartere enn en kalkulator, og like glitrende som din favoritt-makeup!",
@@ -31,8 +31,31 @@ const correctFeedbackMessages = [ // 15 stk
     "Nice, Othilie! Du er like kul som Lilo med solbriller og like flink som Oda F!",
     "Spot on, Othilie! Du er en matte-ninja, og Oda B ville vært imponert!"
 ];
+const newCorrectFeedbackMessages = [
+    "Helt rått, Oter'n! Anders jubler i klasserommet nå!",
+    "Du er en matte-mester fra Skullerudstubben! Korrekt!",
+    "Riktig! Like presist som en perfekt kornett-solo!",
+    "Yes! Dette var ikke noe mysterium for deg, Cluedo-ekspert!",
+    "Korrekt! Du scorer like lett på matte som på fotballbanen for RASK!",
+    "Fantastisk, Othilie! Du er klar for matte-utfordringer i USA!",
+    "Helt konge! Dette var IKKE urettferdig, du er jo superflink!",
+    "Du svømmer deg gjennom disse oppgavene! Riktig!",
+    "Perfekt! Anders er så stolt at han nesten tar en gledeståre!",
+    "Oter'n er i sonen! Enda et riktig svar!",
+    "Riktig! Du treffer tonen perfekt, akkurat som på kornetten!",
+    "Ingen tvil her, Othilie! Du har løst gåten!",
+    "Mål! Du er RASK på avtrekkeren med riktig svar!",
+    "Supert! Du kommer til å imponere alle i USA med mattekunnskapene dine!",
+    "Dette var jo lett match! Ikke urettferdig i det hele tatt!",
+    "Du er en stjerne, Othilie! Like glitrende som vannet i svømmebassenget!",
+    "Korrekt! Anders sender deg en digital high five!",
+    "Oter'n, du er ustoppelig! Riktig igjen!",
+    "Du spiller deg til riktig svar, som en mester på kornett!",
+    "Saken er løst! Riktig svar, Othilie!"
+];
+correctFeedbackMessages = correctFeedbackMessages.concat(newCorrectFeedbackMessages);
 
-const incorrectFeedbackMessages = [ // 15 stk
+let incorrectFeedbackMessages = [ // 15 stk
     "Oisann, Othilie! Den var litt vrien, hva? Kanskje Mamma eller Pappa kan hjelpe? Riktig svar var ",
     "Næææh, ikke helt, Othilie. Men neste gang, da sitter'n! Som en perfekt Sabrina Carpenter-sang! Riktig svar var ",
     "Ups! Selv Stitch gjør feil noen ganger, Othilie. Ikke gi deg! Riktig svar var ",
@@ -49,6 +72,29 @@ const incorrectFeedbackMessages = [ // 15 stk
     "Oi, den gikk litt skeis, Othilie! Som når Stitch prøver å bake (eller gjøre matte). Riktig svar var ",
     "Litt feil, Othilie, men 'Hakuna Matata' – ingen bekymringer! Du er like flink som Oda B og Oda F! Riktig svar var "
 ];
+const newIncorrectFeedbackMessages = [
+    "Oisann, Oter'n! Anders ble litt lei seg nå, men heier på deg videre! Riktig svar var ",
+    "Huff da, Skullerudstubben-stjerne! Ikke helt i mål. Riktig svar var ",
+    "Nesten, Othilie! Som å bomme på en tone på kornetten. Riktig svar var ",
+    "Det var en vrien gåte, Cluedo-detektiv! Riktig svar var ",
+    "Bom på mål, RASK-spiller! Men du scorer neste gang! Riktig svar var ",
+    "Litt feil, Othilie, men du lærer masse før USA-turen! Riktig svar var ",
+    "Uffda, dette føltes kanskje litt urettferdig? Riktig svar var ",
+    "En liten svømmetur unna riktig svar, Othilie! Riktig svar var ",
+    "Anders sukker litt, men vet du kan bedre, Oter'n! Riktig svar var ",
+    "Ikke helt, men Oter'n gir aldri opp! Riktig svar var ",
+    "Den tonen satt ikke helt, men øvelse gjør mester! Riktig svar var ",
+    "Mysteriet fortsetter... Prøv igjen! Riktig svar var ",
+    "Selvmål! Men du kommer sterkere tilbake for RASK! Riktig svar var ",
+    "Litt mer øving før USA, så sitter det! Riktig svar var ",
+    "Var dette urettferdig vanskelig, Othilie? Riktig svar var ",
+    "Du gikk nesten under, men du kommer deg opp igjen! Riktig svar var ",
+    "Anders rynker pannen, men har troen på deg! Riktig svar var ",
+    "Oter'n, den glapp! Men du er snart tilbake på sporet. Riktig svar var ",
+    "En falsk note der, men neste blir ren! Riktig svar var ",
+    "Feil spor, detektiv! Men du finner løsningen snart. Riktig svar var "
+];
+incorrectFeedbackMessages = incorrectFeedbackMessages.concat(newIncorrectFeedbackMessages);
 
 function generateAllPossibleQuestions() {
     allPossibleQuestions = [];
