@@ -106,5 +106,13 @@ h1 {
 
 #next-btn, #restart-btn {
     background-color: #17a2b8; /* Turkis knapp */
-    /* ... (samme styling som .option-btn eller .back-button kan gjenbrukes/tilpasses) ... */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Økt padding for større knapp */
+    font-size: 1.2em;  /* Økt fontstørrelse */
+    border-radius: 8px; /* Litt større radius for å matche størrelsen */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px; /* Litt mellomrom over knappen */
+    display: inline-block; /* For at padding og margin skal fungere korrekt */
 }
