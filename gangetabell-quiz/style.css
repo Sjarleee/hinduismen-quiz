@@ -129,3 +129,19 @@ h1 {
     display: block;   /* Sørger for at det tar opp sin egen linje om nødvendig */
     margin-top: 5px;
 }
+
+.back-button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+}
+
+.back-button:hover {
+    background-color: #e0e0e0;
+}
