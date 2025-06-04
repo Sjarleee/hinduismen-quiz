@@ -119,6 +119,8 @@
         const feedbackEl = document.getElementById('feedback');
         const nextButton = document.getElementById('next-button');
 
+        const audioEnabled = 'speechSynthesis' in window;
+
         const allColors = [
             { name: 'red', norwegian: 'røde', hex: '#E74C3C' },
             { name: 'blue', norwegian: 'blå', hex: '#3498DB' },
@@ -130,6 +132,41 @@
 
         let targetColor;
         const numCirclesToShow = 3; // Antall sirkler å vise
+        const correctAudioMessages = ["Bra!", "Kjempebra!", "Riktig!", "Supert!", "Fantastisk!"];
+
+        function speak(text, lang = 'nb-NO', callback) {
+            if (!audioEnabled) {
+                if (typeof callback === 'function') {
+                    // Forsikre at callback kjøres selv om lyd ikke er tilgjengelig
+                    setTimeout(callback, 0);
+                }
+                return;
+            }
+
+            // Stopp eventuell pågående tale
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            // Du kan justere disse for å endre stemmen litt:
+            // utterance.rate = 0.9; // Litt saktere
+            // utterance.pitch = 1.1; // Litt lysere
+
+            if (typeof callback === 'function') {
+                utterance.onend = function() {
+                    utterance.onend = null; // Forhindre flere kall
+                    callback();
+                };
+                utterance.onerror = function(event) {
+                    console.error('Feil med talesyntese:', event);
+                    utterance.onerror = null; // Forhindre flere kall
+                    callback(); // Fortsett uansett
+                };
+            }
+            speechSynthesis.speak(utterance);
+        }
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -148,7 +185,9 @@
             const currentRoundColors = allColors.slice(0, numCirclesToShow);
             targetColor = currentRoundColors[Math.floor(Math.random() * numCirclesToShow)];
 
-            questionEl.textContent = `Kan du trykke på den ${targetColor.norwegian} rundingen?`;
+            const questionText = `Kan du trykke på den ${targetColor.norwegian} rundingen?`;
+            questionEl.textContent = questionText;
+            speak(questionText);
 
             shuffleArray(currentRoundColors); // Bland rekkefølgen sirklene vises i
             currentRoundColors.forEach(color => {
@@ -164,14 +203,22 @@
         function handleCircleClick(event) {
             const clickedColorName = event.target.dataset.colorName;
             if (clickedColorName === targetColor.name) {
-                feedbackEl.textContent = '🎉 Bra! 🎉';
+                const randomPraise = correctAudioMessages[Math.floor(Math.random() * correctAudioMessages.length)];
+                feedbackEl.textContent = `🎉 ${randomPraise} 🎉`;
                 feedbackEl.className = 'feedback-correct';
                 nextButton.style.display = 'inline-block';
                 // For å unngå flere klikk etter riktig svar
                 document.querySelectorAll('.circle').forEach(c => c.removeEventListener('click', handleCircleClick));
+
+                speak(randomPraise, () => {
+                    // Denne kjøres etter at "Bra!" er ferdig
+                    speak("Klar for neste runde?");
+                });
             } else {
-                feedbackEl.textContent = 'Feil, forsøk igjen!';
+                const wrongMessage = 'Feil, forsøk igjen!';
+                feedbackEl.textContent = wrongMessage;
                 feedbackEl.className = 'feedback-wrong';
+                speak(wrongMessage);
                 event.target.style.borderColor = '#dc3545'; // Marker feilklikk
                 setTimeout(() => { event.target.style.borderColor = 'transparent';}, 800);
             }
