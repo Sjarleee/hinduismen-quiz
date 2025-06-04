@@ -9,13 +9,14 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: #f4f7f6; /* Litt endret bakgrunnsfarge for konsistens */
             color: #333;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Sentrerer .container horisontalt */
             min-height: 100vh;
-            padding-top: 40px;
+            padding: 20px; /* Lagt til padding på alle sider */
+            box-sizing: border-box; /* Inkluderer padding og border i elementets totale bredde/høyde */
         }
         .container {
             background-color: #fff;
@@ -24,7 +25,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             width: 100%;
             max-width: 600px;
-            text-align: center;
+            text-align: center; /* Beholder sentrert tekst inni containeren */
         }
         .home-link {
             display: block;
