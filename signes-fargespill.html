@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signes Fargespill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff; /* Lys blå bakgrunn */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .game-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        #question {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .circles-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px; /* Mellomrom mellom sirklene */
+            margin-bottom: 30px;
+            min-height: 120px; /* For å unngå hopping når sirkler endres */
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 3px solid transparent;
+        }
+
+        .circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        #feedback {
+            font-size: 1.5em;
+            font-weight: bold;
+            min-height: 30px; /* For å unngå hopping */
+            margin-bottom: 20px;
+        }
+
+        .feedback-correct {
+            color: #28a745; /* Grønn */
+        }
+
+        .feedback-wrong {
+            color: #dc3545; /* Rød */
+        }
+
+        #next-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: none; /* Skjult i starten */
+        }
+
+        #next-button:hover {
+            background-color: #0056b3;
+        }
+         .home-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .home-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <a href="index.html" class="home-link">&larr; Tilbake til hovedsiden</a>
+        <h1 id="question">Laster spill...</h1>
+        <div class="circles-container" id="circles-container">
+            <!-- Sirkler blir lagt til her av JavaScript -->
+        </div>
+        <div id="feedback"></div>
+        <button id="next-button">Neste runde!</button>
+    </div>
+
+    <script>
+        const questionEl = document.getElementById('question');
+        const circlesContainer = document.getElementById('circles-container');
+        const feedbackEl = document.getElementById('feedback');
+        const nextButton = document.getElementById('next-button');
+
+        const allColors = [
+            { name: 'red', norwegian: 'røde', hex: '#E74C3C' },
+            { name: 'blue', norwegian: 'blå', hex: '#3498DB' },
+            { name: 'green', norwegian: 'grønne', hex: '#2ECC71' },
+            { name: 'yellow', norwegian: 'gule', hex: '#F1C40F' },
+            { name: 'purple', norwegian: 'lilla', hex: '#9B59B6' },
+            { name: 'orange', norwegian: 'oransje', hex: '#E67E22' }
+        ];
+
+        let targetColor;
+        const numCirclesToShow = 3; // Antall sirkler å vise
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startNewRound() {
+            feedbackEl.textContent = '';
+            feedbackEl.className = '';
+            nextButton.style.display = 'none';
+            circlesContainer.innerHTML = '';
+
+            shuffleArray(allColors);
+            const currentRoundColors = allColors.slice(0, numCirclesToShow);
+            targetColor = currentRoundColors[Math.floor(Math.random() * numCirclesToShow)];
+
+            questionEl.textContent = `Kan du trykke på den ${targetColor.norwegian} rundingen?`;
+
+            shuffleArray(currentRoundColors); // Bland rekkefølgen sirklene vises i
+            currentRoundColors.forEach(color => {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                circle.style.backgroundColor = color.hex;
+                circle.dataset.colorName = color.name;
+                circle.addEventListener('click', handleCircleClick);
+                circlesContainer.appendChild(circle);
+            });
+        }
+
+        function handleCircleClick(event) {
+            const clickedColorName = event.target.dataset.colorName;
+            if (clickedColorName === targetColor.name) {
+                feedbackEl.textContent = '🎉 Bra! 🎉';
+                feedbackEl.className = 'feedback-correct';
+                nextButton.style.display = 'inline-block';
+                // For å unngå flere klikk etter riktig svar
+                document.querySelectorAll('.circle').forEach(c => c.removeEventListener('click', handleCircleClick));
+            } else {
+                feedbackEl.textContent = 'Feil, forsøk igjen!';
+                feedbackEl.className = 'feedback-wrong';
+                event.target.style.borderColor = '#dc3545'; // Marker feilklikk
+                setTimeout(() => { event.target.style.borderColor = 'transparent';}, 800);
+            }
+        }
+
+        nextButton.addEventListener('click', startNewRound);
+
+        // Start spillet
+        startNewRound();
+    </script>
+</body>
+</html>
