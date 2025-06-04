@@ -133,6 +133,31 @@
         let targetColor;
         const numCirclesToShow = 3; // Antall sirkler å vise
         const correctAudioMessages = ["Bra!", "Kjempebra!", "Riktig!", "Supert!", "Fantastisk!"];
+        let preferredVoice = null;
+
+        function updateVoiceList() {
+            if (!audioEnabled) return;
+            const voices = speechSynthesis.getVoices();
+            if (voices.length === 0 && speechSynthesis.onvoiceschanged === null) {
+                // Some browsers load voices on first speak command, or need more time.
+                // This is a fallback, usually onvoiceschanged handles it.
+                speechSynthesis.onvoiceschanged = updateVoiceList;
+                return;
+            }
+
+            // Prioriter norske stemmer, gjerne Google-stemmer hvis tilgjengelig
+            preferredVoice = voices.find(voice => voice.lang === 'nb-NO' && /google/i.test(voice.name)) ||
+                             voices.find(voice => voice.lang === 'nb-NO');
+
+            // console.log("Tilgjengelige stemmer:", voices);
+            // console.log("Valgt stemme:", preferredVoice);
+        }
+
+        // Stemmer lastes asynkront. `onvoiceschanged` fyres når listen er klar.
+        if (audioEnabled) {
+            speechSynthesis.onvoiceschanged = updateVoiceList;
+            updateVoiceList(); // Prøv å hente med en gang også, i tilfelle de er klare
+        }
 
         function speak(text, lang = 'nb-NO', callback) {
             if (!audioEnabled) {
@@ -150,6 +175,9 @@
 
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = lang;
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
             // Du kan justere disse for å endre stemmen litt:
             // utterance.rate = 0.9; // Litt saktere
             // utterance.pitch = 1.1; // Litt lysere
