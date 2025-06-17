@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fredags Visdomsord</title>
+    <link rel="stylesheet" href="gangetabell-quiz/style.css"> <!-- Bruker samme stilark for enkelhetens skyld -->
+    <style>
+        /* Litt ekstra stil for denne siden */
+        .app-container {
+            max-width: 800px; /* Litt bredere for å få plass til mer tekst */
+        }
+        .single-wisdom-display {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 25px 30px;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            min-height: 70px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .single-wisdom-display::before {
+            content: "✨ "; /* Lite ikon før hvert visdomsord */
+            margin-right: 10px;
+        }
+        #next-wisdom-btn {
+            background-color: #27ae60; /* Grønn, likner på quiz-knapper */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.05em;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0 auto; /* Sentrert, med toppmargin */
+            transition: background-color 0.2s ease;
+        }
+        #next-wisdom-btn:hover {
+            background-color: #219d55;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <a href="index.html" class="button back-button">&larr; Tilbake til hovedsiden</a>
+        <h1>50 Helt Tullete Visdomsord for en Fredag</h1>
+
+        <div id="wisdom-display" class="single-wisdom-display">
+            <!-- Visdomsord lastes her av JavaScript -->
+        </div>
+        <button id="next-wisdom-btn">Neste Visdomsord</button>
+    </div>
+
+    <script>
+        const wisdoms = [
+            "Husk at sokker sjelden forsvinner alene; de planlegger en ferie.",
+            "Hvis du snubler, gjør det til en del av dansen. Spesielt på en fredag.",
+            "En kaktus er bare en veldig tålmodig agurk.",
+            "Fredag er beviset på at universet vil at du skal spise pizza.",
+            "Ikke ta livet for alvorlig, du slipper uansett ikke levende fra det.",
+            "Den beste måten å forutsi fremtiden på, er å spise opp all sjokoladen nå.",
+            "Hvis du ikke kan overbevise dem, forvirr dem med glitter.",
+            "Husk: \"Stress\" er \"desserts\" stavet baklengs. Tilfeldig? Neppe.",
+            "En dag uten latter er en bortkastet dag. En dag uten kaffe er tortur.",
+            "Vær som en ananas: Stå stolt, bær en krone, og vær søt på innsiden.",
+            "Livet er kort. Smil mens du fortsatt har tenner.",
+            "Hvorfor heter det rushtid når ingenting beveger seg?",
+            "Den som sa at ingenting er umulig, har aldri prøvd å smelle igjen en svingdør.",
+            "Jeg er ikke lat, jeg er i energisparingsmodus. Det er fredag!",
+            "Kaffe forstår. Kaffe dømmer ikke. Kaffe er din venn.",
+            "Hvis du tror ingen bryr seg om du er i live, prøv å glemme en regning.",
+            "Det er fredag! Tid for å være en helt... og redde litt vin fanget i en flaske.",
+            "Aldri undervurder kraften i en god lur. Eller to.",
+            "Husk at du er unik. Akkurat som alle andre.",
+            "Den raskeste veien til en manns hjerte er gjennom brystkassen med en skarp gjenstand. Eller pizza. Pizza funker også.",
+            "Vær deg selv. Med mindre du kan være en enhjørning. Vær alltid en enhjørning.",
+            "Fredagskalorier teller ikke. Det er vitenskap.",
+            "Hvis du faller, lander jeg på deg for å dempe fallet.",
+            "Livet er som en boks sjokolade. Du vet aldri hva du får, men det er sannsynligvis nøtter.",
+            "Ikke utsett til i morgen det du kan få noen andre til å gjøre i dag.",
+            "Den beste terapien er ofte en lang kjøretur og god musikk.",
+            "Husk at selv den mørkeste natt ender, og solen vil stå opp. Med mindre det er polarnatt.",
+            "Å spise kake foran speilet dobler nytelsen.",
+            "Hvis Plan A ikke fungerer, har alfabetet 28 flere bokstaver. Slapp av.",
+            "Fredag: Min nest favoritt F-ord.",
+            "Jeg trenger en seks måneders ferie, to ganger i året.",
+            "Den som ler sist, tenker tregest. Eller har den beste vitsen.",
+            "Vær forsiktig når du leser helsebøker; du kan dø av en trykkfeil.",
+            "Min lommebok er som en løk; å åpne den får meg til å gråte.",
+            "Det er greit hvis du ikke liker meg. Ikke alle har god smak.",
+            "Jeg følger ikke drømmene mine, jeg jakter dem ned med en gaffel.",
+            "Fredag er dagen for å la håret flagre og bekymringene fare.",
+            "Hvis du ikke kan le av deg selv, la meg gjøre det for deg.",
+            "Husk at \"perfekt\" er et stygt ord. \"Ferdig\" er mye bedre.",
+            "Den eneste grunnen til at jeg har en kjøkkenhage er fordi zombier spiser korn.",
+            "Livet er ikke et eventyr. Hvis du mister skoen din ved midnatt, er du sannsynligvis full.",
+            "Jeg er ikke klumsete. Gulvet hater meg bare, bordene er bøller, og veggene kommer ut av ingenting.",
+            "Fredag er som en superhelt som alltid kommer for å redde uken.",
+            "Ikke bekymre deg for hva folk tenker; de gjør det ikke så ofte.",
+            "Den beste måten å sette pris på jobben din på, er å forestille deg selv uten en. Eller bare vent til fredag.",
+            "Husk at du er modigere enn du tror, sterkere enn du ser ut, og smartere enn du aner. Og det er fredag!",
+            "Hvis du vil ha frokost på sengen, sov på kjøkkenet.",
+            "Det er aldri for sent å være den du kunne ha vært. Med mindre du vil være yngre.",
+            "Fredag. Oppfør deg som om du eier stedet. Inntil sjefen kommer.",
+            "Min favorittøvelse er en krysning mellom en lunge og en crunch. Jeg kaller det lunsj."
+        ];
+
+        const wisdomDisplayElement = document.getElementById('wisdom-display');
+        const nextWisdomButton = document.getElementById('next-wisdom-btn');
+        let lastWisdomIndex = -1;
+
+        function showNewWisdom() {
+            if (wisdoms.length === 0) {
+                wisdomDisplayElement.textContent = "Tomt for visdomsord i dag!";
+                nextWisdomButton.disabled = true;
+                return;
+            }
+
+            let randomIndex;
+            if (wisdoms.length === 1) {
+                randomIndex = 0;
+            } else {
+                do {
+                    randomIndex = Math.floor(Math.random() * wisdoms.length);
+                } while (randomIndex === lastWisdomIndex);
+            }
+            
+            lastWisdomIndex = randomIndex;
+            wisdomDisplayElement.textContent = wisdoms[randomIndex];
+        }
+
+        nextWisdomButton.addEventListener('click', showNewWisdom);
+
+        // Vis det første visdomsordet når siden lastes
+        document.addEventListener('DOMContentLoaded', showNewWisdom);
+    </script>
+</body>
+</html>
