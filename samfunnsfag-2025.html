@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samfunnsfag Quiz 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 700px;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-bottom: 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        h1 {
+            text-align: center;
+            color: #005a9e; /* En mer "seriøs" blåfarge */
+            margin-bottom: 25px;
+        }
+        .question-area, .result-area {
+            margin-bottom: 20px;
+        }
+        #question-number {
+            font-size: 0.9em;
+            color: #777;
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        .question-text {
+            font-size: 1.25em;
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 1.4;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1em;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .options button:hover:not(:disabled) {
+            background-color: #e9ecef;
+            border-color: #ced4da;
+        }
+        .options button.correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+        .options button.incorrect {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+        }
+        .options button:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .feedback.correct {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        .navigation {
+            margin-top: 25px;
+            text-align: center;
+        }
+        .navigation button {
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.2s;
+        }
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+        #score-text {
+            font-size: 1.5em;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <a href="index.html" class="back-button">&larr; Tilbake til hovedsiden</a>
+        <h1>Samfunnsfag Quiz 2025</h1>
+
+        <div id="quiz-area">
+            <div class="question-area">
+                <p id="question-number"></p>
+                <p id="question-text" class="question-text"></p>
+                <div id="options-container" class="options"></div>
+            </div>
+            <div id="feedback-area" class="feedback hidden"></div>
+            <div class="navigation">
+                <button id="next-btn" class="hidden">Neste</button>
+            </div>
+        </div>
+
+        <div id="result-area" class="result-area hidden">
+            <h2 id="score-text"></h2>
+            <div class="navigation">
+                <button id="restart-btn">Start på nytt</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "Hva vil det si at demokratiet er under press?", options: ["At demokratiske verdier som ytringsfrihet og frie valg svekkes", "At flere deltar i valg", "At økonomien blir sterkere", "At det blir færre politiske partier"], answer: "At demokratiske verdier som ytringsfrihet og frie valg svekkes" },
+            { question: "Hva er en stor utfordring med dagens store mengder informasjon?", options: ["Det er vanskelig å skille mellom sann og usann informasjon", "Det er for dyrt å få tilgang til nyheter", "Det finnes for få informasjonskilder", "All informasjon er på engelsk"], answer: "Det er vanskelig å skille mellom sann og usann informasjon" },
+            { question: "Hva er demokratiet avhengig av for å overleve?", options: ["Engasjerte borgere, frie medier og tillit", "En sterk leder og ett parti", "At ingen kritiserer regjeringen", "At alle er enige om alt"], answer: "Engasjerte borgere, frie medier og tillit" },
+            { question: "Hva er politikk og demokrati?", options: ["Politikk er styring av samfunnet, demokrati er folkestyre", "Politikk er kun for politikere, demokrati er for alle", "Politikk og demokrati er det samme", "Demokrati er når kongen bestemmer"], answer: "Politikk er styring av samfunnet, demokrati er folkestyre" },
+            { question: "Hvilke tre rettigheter nevnes ofte som sentrale i et demokrati?", options: ["Ytringsfrihet, religionsfrihet, rett til privatliv", "Rett til gratis bil, hus og jobb", "Rett til å slippe skatt, plikt til å jobbe", "Rett til å bestemme over andre"], answer: "Ytringsfrihet, religionsfrihet, rett til privatliv" },
+            { question: "Hva har skjedd med demokratiene i land som USA, Tyrkia, Ungarn og Brasil de siste årene?", options: ["Økt polarisering og svekkelse av institusjoner", "De har blitt mer stabile og samlet", "De har avskaffet valg", "De har blitt monarkier"], answer: "Økt polarisering og svekkelse av institusjoner" },
+            { question: "Hva er et valg?", options: ["En prosess der folket velger sine representanter", "En dag der alle har fri fra jobben", "En konkurranse om å bli konge", "En religiøs seremoni"], answer: "En prosess der folket velger sine representanter" },
+            { question: "Hvem har stemmerett ved stortingsvalg i Norge?", options: ["Norske statsborgere over 18 år", "Alle som bor i Norge", "Bare de som eier hus", "Bare de som har fullført universitetet"], answer: "Norske statsborgere over 18 år" },
+            { question: "Hva er et politisk parti?", options: ["En gruppe mennesker med felles politiske mål", "En klubb for de som liker å diskutere", "Alle som jobber på Stortinget", "En gruppe som arrangerer fester"], answer: "En gruppe mennesker med felles politiske mål" },
+            { question: "Hvordan kan vanlige folk påvirke politikere?", options: ["Ved å stemme, demonstrere og skrive innlegg", "Kun ved å sende dem personlige gaver", "Ved å bli politiker selv", "Det er ikke mulig å påvirke politikere"], answer: "Ved å stemme, demonstrere og skrive innlegg" },
+            { question: "Hva betyr kildebevissthet?", options: ["Å være klar over hvor informasjonen kommer fra", "Å kunne alle kilder utenat", "Å bare stole på én kilde", "Å lage sine egne kilder"], answer: "Å være klar over hvor informasjonen kommer fra" },
+            { question: "Hva er kildekritikk?", options: ["Å vurdere om en kilde er troverdig", "Å kritisere alle kilder man finner", "Å godta all informasjon som sann", "Å kun lese bøker"], answer: "Å vurdere om en kilde er troverdig" },
+            { question: "Hva er kildetillit?", options: ["Å ha tillit til kilder med god historikk for å være pålitelige", "Å stole blindt på alt man leser på internett", "Å aldri stole på noen kilder", "Å bare stole på venner"], answer: "Å ha tillit til kilder med god historikk for å være pålitelige" },
+            { question: "Hvorfor er frie og uavhengige medier viktige i et demokrati?", options: ["De kontrollerer makthaverne og informerer folket", "De forteller regjeringen hva den skal gjøre", "De publiserer bare positive nyheter", "De er eid og styrt av staten"], answer: "De kontrollerer makthaverne og informerer folket" },
+            { question: "Hva er algoritmer i sosiale medier?", options: ["Programmer som styrer hvilket innhold du ser", "Regler for god oppførsel på nett", "Personer som sletter stygge kommentarer", "Passordet du bruker for å logge inn"], answer: "Programmer som styrer hvilket innhold du ser" },
+            { question: "Hva kan være negativt med algoritmer?", options: ["De kan skape ekkokamre og polarisering", "De gjør internett tregere", "De koster penger å bruke", "De viser bare reklame"], answer: "De kan skape ekkokamre og polarisering" },
+            { question: "Hva gjør en politisk kommentator?", options: ["Analyserer og forklarer politikk for publikum", "Bestemmer hva politikerne skal mene", "Er en politiker som kommenterer andre", "Lager lover og regler"], answer: "Analyserer og forklarer politikk for publikum" },
+            { question: "Hva kjennetegner en god sosial gruppe?", options: ["Den er inkluderende og viser respekt for alle", "Alle i gruppen er helt like", "Gruppen har en streng leder som bestemmer alt", "Den er eksklusiv og vanskelig å bli med i"], answer: "Den er inkluderende og viser respekt for alle" },
+            { question: "Hva kjennetegner en dårlig sosial gruppe?", options: ["Den ekskluderer, baksnakker og skaper press", "Den er åpen for alle", "Alle får si sin mening", "Den hjelper andre utenfor gruppen"], answer: "Den ekskluderer, baksnakker og skaper press" },
+            { question: "Hva er skjult valgpåvirkning?", options: ["Forsøk på å manipulere velgere uten at de merker det", "Vanlige valgplakater og reklamer", "Politiske debatter på TV", "Åpent å si hvem man bør stemme på"], answer: "Forsøk på å manipulere velgere uten at de merker det" },
+            { question: "Hva er et eksempel på ulovlig valgpåvirkning?", options: ["Å true eller kjøpe stemmer", "Å henge opp en valgplakat", "Å dele en artikkel fra et parti", "Å diskutere politikk med en venn"], answer: "Å true eller kjøpe stemmer" },
+            { question: "Hvordan kan kunstig intelligens (KI) påvirke valg?", options: ["Ved å lage og spre falske videoer (deepfakes) og desinformasjon", "Ved å telle opp stemmene raskere og mer nøyaktig", "Ved å gjøre det enklere å registrere seg for å stemme", "Ved å skrive partiprogrammer"], answer: "Ved å lage og spre falske videoer (deepfakes) og desinformasjon" },
+            { question: "Hva bør man være obs på ved bruk av tall og grafer i politisk argumentasjon?", options: ["De kan være valgt ut for å være misvisende", "De er alltid 100% objektive og sanne", "De er for kompliserte for vanlige folk å forstå", "De er som regel falske"], answer: "De kan være valgt ut for å være misvisende" },
+            { question: "Hva er et demokrati?", options: ["Et folkestyre med frie valg og grunnleggende rettigheter", "Et system der den rikeste personen styrer", "Et land uten en regjering", "Et styre basert på militærmakt"], answer: "Et folkestyre med frie valg og grunnleggende rettigheter" },
+            { question: "Hva er et diktatur?", options: ["En styreform der én person eller en liten gruppe har all makt", "En styreform der alle avgjørelser tas ved folkeavstemning", "Et annet ord for monarki", "Et land med mange politiske partier"], answer: "En styreform der én person eller en liten gruppe har all makt" },
+            { question: "Hva er en typisk fordel med demokrati?", options: ["Det sikrer innbyggerne frihet, rettigheter og deltakelse", "Avgjørelser tas alltid veldig raskt", "Alle er alltid enige", "Det er den billigste styreformen"], answer: "Det sikrer innbyggerne frihet, rettigheter og deltakelse" },
+            { question: "Hva kan være en ulempe med demokrati?", options: ["Beslutningsprosesser kan være trege på grunn av uenighet", "Det er ingen som har ansvar", "Lederen kan ikke kastes", "Folket har ingen makt"], answer: "Beslutningsprosesser kan være trege på grunn av uenighet" },
+            { question: "Hva kan ses på som en 'fordel' med diktatur?", options: ["Beslutninger kan tas veldig effektivt og raskt", "Alle har ytringsfrihet", "Lederen blir valgt av folket", "Det er stor grad av personlig frihet"], answer: "Beslutninger kan tas veldig effektivt og raskt" },
+            { question: "Hva er den største ulempen med diktatur?", options: ["Mangel på frihet, rettigheter og undertrykkelse", "Det er vanskelig å vite hvem som bestemmer", "Det blir ofte for mange valg", "Lover og regler endres hele tiden"], answer: "Mangel på frihet, rettigheter og undertrykkelse" },
+            { question: "Hva er menneskerettigheter?", options: ["Universelle, grunnleggende rettigheter alle mennesker har", "Rettigheter som kun gjelder i Norge", "Regler for hvordan man skal oppføre seg", "En liste over plikter man har"], answer: "Universelle, grunnleggende rettigheter alle mennesker har" },
+            { question: "Hva kjennetegner en rettsstat?", options: ["Likhet for loven og at ingen kan straffes uten lovlig dom", "At dommerne er valgt av politikerne", "At politiet kan dømme folk", "At rike folk får mildere straffer"], answer: "Likhet for loven og at ingen kan straffes uten lovlig dom" },
+            { question: "Hva betyr likeverd?", options: ["At alle mennesker har samme verdi uansett hvem de er", "At alle skal tjene like mye penger", "At alle må mene det samme", "At alle må se like ut"], answer: "At alle mennesker har samme verdi uansett hvem de er" },
+            { question: "Hva er toleranse?", options: ["Å akseptere og respektere at folk er forskjellige og mener ulike ting", "Å være enig med alle", "Å overse ulovlige handlinger", "Å gi etter for press"], answer: "Å akseptere og respektere at folk er forskjellige og mener ulike ting" },
+            { question: "Hva betyr parlamentarisme?", options: ["At regjeringen må ha støtte fra et flertall i parlamentet (Stortinget)", "At parlamentet bestemmer absolutt alt i landet", "At vi har en president i stedet for en konge", "At domstolene styrer regjeringen"], answer: "At regjeringen må ha støtte fra et flertall i parlamentet (Stortinget)" },
+            { question: "Hva er maktfordelingsprinsippet?", options: ["At makten deles mellom en lovgivende, en utøvende og en dømmende makt", "At all makt samles hos statsministeren", "At makten fordeles likt mellom alle innbyggere", "At militæret og politiet deler makten"], answer: "At makten deles mellom en lovgivende, en utøvende og en dømmende makt" },
+            { question: "Hvorfor kalles mediene noen ganger 'den fjerde statsmakt'?", options: ["Fordi de har en viktig rolle i å kontrollere de andre statsmaktene", "Fordi de er den mektigste institusjonen i landet", "Fordi det står i Grunnloven", "Fordi de eies av staten"], answer: "Fordi de har en viktig rolle i å kontrollere de andre statsmaktene" },
+            { question: "Hvilke partier plasseres vanligvis på venstresiden i norsk politikk?", options: ["Rødt, SV og Arbeiderpartiet", "Høyre og Fremskrittspartiet", "Venstre og KrF", "Senterpartiet og MDG"], answer: "Rødt, SV og Arbeiderpartiet" },
+            { question: "Hvilke partier regnes ofte som sentrumspartier?", options: ["Senterpartiet, MDG, Venstre og KrF", "Arbeiderpartiet og Høyre", "Rødt og SV", "Kun Senterpartiet"], answer: "Senterpartiet, MDG, Venstre og KrF" },
+            { question: "Hvilke partier plasseres vanligvis på høyresiden i norsk politikk?", options: ["Høyre og Fremskrittspartiet", "Arbeiderpartiet og SV", "Venstre og MDG", "Rødt og Senterpartiet"], answer: "Høyre og Fremskrittspartiet" },
+            { question: "Hva er en ideologi?", options: ["Et helhetlig tankesett om hvordan samfunnet bør være og styres", "En liste over lover", "Et politisk partis slagord", "En type vitenskap"], answer: "Et helhetlig tankesett om hvordan samfunnet bør være og styres" },
+            { question: "Hva kjennetegner typisk høyresiden i politikken?", options: ["Ønske om lavere skatter, mer privat ansvar og mindre statlig styring", "Ønske om en sterk stat som eier det meste og høye skatter", "Fokus på miljøvern fremfor alt annet", "At de vil melde Norge ut av alle internasjonale avtaler"], answer: "Ønske om lavere skatter, mer privat ansvar og mindre statlig styring" },
+            { question: "Hva kjennetegner typisk venstresiden i politikken?", options: ["Ønske om en sterk velferdsstat, omfordeling og mer statlig styring", "Ønske om lavest mulig skatter og færrest mulig offentlige tjenester", "At de er imot alt av privat næringsliv", "Fokus på tradisjonelle verdier og nasjonalisme"], answer: "Ønske om en sterk velferdsstat, omfordeling og mer statlig styring" },
+            { question: "Hvordan får staten inntekter?", options: ["Gjennom skatter, avgifter og inntekter fra Oljefondet", "Kun ved å selge olje", "Ved å låne penger fra andre land", "Ved å be om donasjoner fra innbyggerne"], answer: "Gjennom skatter, avgifter og inntekter fra Oljefondet" },
+            { question: "Hva er et partiprogram?", options: ["En oversikt over hva et parti mener og vil gjøre hvis de får makt", "Et TV-program om et politisk parti", "En liste over medlemmene i partiet", "En plan for partiets neste fest"], answer: "En oversikt over hva et parti mener og vil gjøre hvis de får makt" },
+            { question: "Hva er en partiliste ved valg?", options: ["En prioritert liste over kandidatene partiet stiller til valg med", "En liste over alle som har stemt på partiet", "En liste over partiets sponsorer", "En liste over saker partiet er imot"], answer: "En prioritert liste over kandidatene partiet stiller til valg med" },
+            { question: "Hva er kravene for å kunne stemme ved valg i Norge?", options: ["Man må være norsk statsborger og ha fylt 18 år", "Man må ha jobb og betale skatt", "Man må ha bodd i Norge i minst 10 år", "Man må være medlem av et politisk parti"], answer: "Man må være norsk statsborger og ha fylt 18 år" },
+            { question: "Hva er flertallsvalg?", options: ["Et valgsystem der kandidaten med flest stemmer i en krets vinner mandatet", "Et system der alle partier får like mange representanter", "Et system der man stemmer over flere saker samtidig", "Et system som kun brukes i diktaturer"], answer: "Et valgsystem der kandidaten med flest stemmer i en krets vinner mandatet" },
+            { question: "Hva er forholdstallsvalg, som vi bruker i Norge?", options: ["Et system der mandater fordeles prosentvis etter partienes stemmetall", "Et system der den med flest personstemmer alltid vinner", "Et system der vinneren tar alt", "Et system der bare de to største partiene får representanter"], answer: "Et system der mandater fordeles prosentvis etter partienes stemmetall" },
+            { question: "Hva er en fordel med flertallsvalg (som i USA/Storbritannia)?", options: ["Det gir ofte stabile flertallsregjeringer", "Det sikrer at mange små partier kommer inn", "Det oppleves som mest rettferdig av alle", "Det er veldig enkelt å telle opp stemmene"], answer: "Det gir ofte stabile flertallsregjeringer" },
+            { question: "Hva er en ulempe med flertallsvalg?", options: ["Mange stemmer kan gå 'tapt' og små partier blir sjelden representert", "Det fører ofte til ustabile koalisjonsregjeringer", "Det er umulig å forutsi valgresultatet", "Det tar veldig lang tid å få et resultat"], answer: "Mange stemmer kan gå 'tapt' og små partier blir sjelden representert" }
+        ];
+
+        const quizAreaEl = document.getElementById('quiz-area');
+        const resultAreaEl = document.getElementById('result-area');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const feedbackAreaEl = document.getElementById('feedback-area');
+        const nextBtnEl = document.getElementById('next-btn');
+        const scoreTextEl = document.getElementById('score-text');
+        const restartBtnEl = document.getElementById('restart-btn');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+        const TOTAL_QUESTIONS_PER_ROUND = 15;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            shuffleArray(questions);
+            shuffledQuestions = questions.slice(0, TOTAL_QUESTIONS_PER_ROUND);
+            
+            quizAreaEl.classList.remove('hidden');
+            resultAreaEl.classList.add('hidden');
+            nextBtnEl.classList.add('hidden');
+            feedbackAreaEl.classList.add('hidden');
+            
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                const currentQuestion = shuffledQuestions[currentQuestionIndex];
+                questionNumberEl.textContent = `Spørsmål ${currentQuestionIndex + 1} av ${shuffledQuestions.length}`;
+                questionTextEl.textContent = currentQuestion.question;
+                optionsContainerEl.innerHTML = '';
+
+                const shuffledOptions = [...currentQuestion.options];
+                shuffleArray(shuffledOptions);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => handleAnswer(button, option, currentQuestion.answer);
+                    optionsContainerEl.appendChild(button);
+                });
+                
+                nextBtnEl.classList.add('hidden');
+                feedbackAreaEl.classList.add('hidden');
+            } else {
+                showResults();
+            }
+        }
+
+        function handleAnswer(buttonEl, selectedOption, correctAnswer) {
+            const allOptionButtons = optionsContainerEl.getElementsByTagName('button');
+            for (let btn of allOptionButtons) {
+                btn.disabled = true;
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add('correct');
+                } else if (btn === buttonEl) {
+                    btn.classList.add('incorrect');
+                }
+            }
+
+            feedbackAreaEl.classList.remove('hidden');
+            if (selectedOption === correctAnswer) {
+                score++;
+                feedbackAreaEl.textContent = 'Helt riktig!';
+                feedbackAreaEl.className = 'feedback correct';
+            } else {
+                feedbackAreaEl.innerHTML = `Feil. Riktig svar var: <br><strong>"${correctAnswer}"</strong>`;
+                feedbackAreaEl.className = 'feedback incorrect';
+            }
+
+            nextBtnEl.classList.remove('hidden');
+        }
+
+        function handleNextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        function showResults() {
+            quizAreaEl.classList.add('hidden');
+            resultAreaEl.classList.remove('hidden');
+            scoreTextEl.textContent = `Du fikk ${score} av ${shuffledQuestions.length} riktige!`;
+        }
+
+        nextBtnEl.addEventListener('click', handleNextQuestion);
+        restartBtnEl.addEventListener('click', startQuiz);
+
+        startQuiz();
+    </script>
+</body>
+</html>
