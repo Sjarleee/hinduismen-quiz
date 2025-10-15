@@ -165,56 +165,306 @@
 
     <script>
         const questions = [
-            { question: "Hva vil det si at demokratiet er under press?", options: ["At demokratiske verdier som ytringsfrihet og frie valg svekkes", "At flere deltar i valg", "At økonomien blir sterkere", "At det blir færre politiske partier"], answer: "At demokratiske verdier som ytringsfrihet og frie valg svekkes", example: "Når politikere angriper medier eller rettsvesen." },
-            { question: "Hva er en stor utfordring med dagens store mengder informasjon?", options: ["Det er vanskelig å skille mellom sann og usann informasjon", "Det er for dyrt å få tilgang til nyheter", "Det finnes for få informasjonskilder", "All informasjon er på engelsk"], answer: "Det er vanskelig å skille mellom sann og usann informasjon", example: "Falske nyheter på sosiale medier." },
-            { question: "Hva er demokratiet avhengig av for å overleve?", options: ["Engasjerte borgere, frie medier og tillit", "En sterk leder og ett parti", "At ingen kritiserer regjeringen", "At alle er enige om alt"], answer: "Engasjerte borgere, frie medier og tillit", example: "At folk stemmer og deltar i debatt." },
-            { question: "Hva er politikk og demokrati?", options: ["Politikk er styring av samfunnet, demokrati er folkestyre", "Politikk er kun for politikere, demokrati er for alle", "Politikk og demokrati er det samme", "Demokrati er når kongen bestemmer"], answer: "Politikk er styring av samfunnet, demokrati er folkestyre", example: "Stortingsvalg." },
-            { question: "Hvilke tre rettigheter nevnes ofte som sentrale i et demokrati?", options: ["Ytringsfrihet, religionsfrihet, rett til privatliv", "Rett til gratis bil, hus og jobb", "Rett til å slippe skatt, plikt til å jobbe", "Rett til å bestemme over andre"], answer: "Ytringsfrihet, religionsfrihet, rett til privatliv", example: "Man kan kritisere regjeringen." },
-            { question: "Hva har skjedd med demokratiene i land som USA, Tyrkia, Ungarn og Brasil de siste årene?", options: ["Økt polarisering og svekkelse av institusjoner", "De har blitt mer stabile og samlet", "De har avskaffet valg", "De har blitt monarkier"], answer: "Økt polarisering og svekkelse av institusjoner", example: "Begrenset pressefrihet i Ungarn." },
-            { question: "Hva er et valg?", options: ["En prosess der folket velger sine representanter", "En dag der alle har fri fra jobben", "En konkurranse om å bli konge", "En religiøs seremoni"], answer: "En prosess der folket velger sine representanter", example: "Kommunestyrevalg." },
-            { question: "Hvem har stemmerett ved stortingsvalg i Norge?", options: ["Norske statsborgere over 18 år", "Alle som bor i Norge", "Bare de som eier hus", "Bare de som har fullført universitetet"], answer: "Norske statsborgere over 18 år", example: "Norske statsborgere over 18 år." },
-            { question: "Hva er et politisk parti?", options: ["En gruppe mennesker med felles politiske mål", "En klubb for de som liker å diskutere", "Alle som jobber på Stortinget", "En gruppe som arrangerer fester"], answer: "En gruppe mennesker med felles politiske mål", example: "SV jobber for miljø og sosial rettferdighet." },
-            { question: "Hvordan kan vanlige folk påvirke politikere?", options: ["Ved å stemme, demonstrere og skrive innlegg", "Kun ved å sende dem personlige gaver", "Ved å bli politiker selv", "Det er ikke mulig å påvirke politikere"], answer: "Ved å stemme, demonstrere og skrive innlegg", example: "Klimastreik." },
-            { question: "Hva betyr kildebevissthet?", options: ["Å være klar over hvor informasjonen kommer fra", "Å kunne alle kilder utenat", "Å bare stole på én kilde", "Å lage sine egne kilder"], answer: "Å være klar over hvor informasjonen kommer fra", example: "Skille mellom NRK og TikTok." },
-            { question: "Hva er kildekritikk?", options: ["Å vurdere om en kilde er troverdig", "Å kritisere alle kilder man finner", "Å godta all informasjon som sann", "Å kun lese bøker"], answer: "Å vurdere om en kilde er troverdig", example: "Sjekke hvem som har skrevet artikkelen." },
-            { question: "Hva er kildetillit?", options: ["Å ha tillit til kilder med god historikk for å være pålitelige", "Å stole blindt på alt man leser på internett", "Å aldri stole på noen kilder", "Å bare stole på venner"], answer: "Å ha tillit til kilder med god historikk for å være pålitelige", example: "Store norske leksikon." },
-            { question: "Hvorfor er frie og uavhengige medier viktige i et demokrati?", options: ["De kontrollerer makthaverne og informerer folket", "De forteller regjeringen hva den skal gjøre", "De publiserer bare positive nyheter", "De er eid og styrt av staten"], answer: "De kontrollerer makthaverne og informerer folket", example: "Avsløringer om korrupsjon." },
-            { question: "Hva er algoritmer i sosiale medier?", options: ["Programmer som styrer hvilket innhold du ser", "Regler for god oppførsel på nett", "Personer som sletter stygge kommentarer", "Passordet du bruker for å logge inn"], answer: "Programmer som styrer hvilket innhold du ser", example: "TikTok viser deg lignende videoer." },
-            { question: "Hva kan være negativt med algoritmer?", options: ["De kan skape ekkokamre og polarisering", "De gjør internett tregere", "De koster penger å bruke", "De viser bare reklame"], answer: "De kan skape ekkokamre og polarisering", example: "Du ser bare én side av en sak." },
-            { question: "Hva gjør en politisk kommentator?", options: ["Analyserer og forklarer politikk for publikum", "Bestemmer hva politikerne skal mene", "Er en politiker som kommenterer andre", "Lager lover og regler"], answer: "Analyserer og forklarer politikk for publikum", example: "Kommentator i VG." },
-            { question: "Hva kjennetegner en god sosial gruppe?", options: ["Den er inkluderende og viser respekt for alle", "Alle i gruppen er helt like", "Gruppen har en streng leder som bestemmer alt", "Den er eksklusiv og vanskelig å bli med i"], answer: "Den er inkluderende og viser respekt for alle", example: "Klasse som støtter hverandre." },
-            { question: "Hva kjennetegner en dårlig sosial gruppe?", options: ["Den ekskluderer, baksnakker og skaper press", "Den er åpen for alle", "Alle får si sin mening", "Den hjelper andre utenfor gruppen"], answer: "Den ekskluderer, baksnakker og skaper press", example: "Gruppe som mobber." },
-            { question: "Hva er skjult valgpåvirkning?", options: ["Forsøk på å manipulere velgere uten at de merker det", "Vanlige valgplakater og reklamer", "Politiske debatter på TV", "Åpent å si hvem man bør stemme på"], answer: "Forsøk på å manipulere velgere uten at de merker det", example: "Falske annonser." },
-            { question: "Hva er et eksempel på ulovlig valgpåvirkning?", options: ["Å true eller kjøpe stemmer", "Å henge opp en valgplakat", "Å dele en artikkel fra et parti", "Å diskutere politikk med en venn"], answer: "Å true eller kjøpe stemmer", example: "Brudd på lover, som kjøp av stemmer." },
-            { question: "Hvordan kan kunstig intelligens (KI) påvirke valg?", options: ["Ved å lage og spre falske videoer (deepfakes) og desinformasjon", "Ved å telle opp stemmene raskere og mer nøyaktig", "Ved å gjøre det enklere å registrere seg for å stemme", "Ved å skrive partiprogrammer"], answer: "Ved å lage og spre falske videoer (deepfakes) og desinformasjon", example: "Deepfake-videoer." },
-            { question: "Hva bør man være obs på ved bruk av tall og grafer i politisk argumentasjon?", options: ["De kan være valgt ut for å være misvisende", "De er alltid 100% objektive og sanne", "De er for kompliserte for vanlige folk å forstå", "De er som regel falske"], answer: "De kan være valgt ut for å være misvisende", example: "Ufullstendig statistikk." },
-            { question: "Hva er et demokrati?", options: ["Et folkestyre med frie valg og grunnleggende rettigheter", "Et system der den rikeste personen styrer", "Et land uten en regjering", "Et styre basert på militærmakt"], answer: "Et folkestyre med frie valg og grunnleggende rettigheter", example: "Folkestyre med frie valg og rettigheter." },
-            { question: "Hva er et diktatur?", options: ["En styreform der én person eller en liten gruppe har all makt", "En styreform der alle avgjørelser tas ved folkeavstemning", "Et annet ord for monarki", "Et land med mange politiske partier"], answer: "En styreform der én person eller en liten gruppe har all makt", example: "Styreform der én eller få har all makt." },
-            { question: "Hva er en typisk fordel med demokrati?", options: ["Det sikrer innbyggerne frihet, rettigheter og deltakelse", "Avgjørelser tas alltid veldig raskt", "Alle er alltid enige", "Det er den billigste styreformen"], answer: "Det sikrer innbyggerne frihet, rettigheter og deltakelse", example: "Frihet, rettigheter, deltakelse." },
-            { question: "Hva kan være en ulempe med demokrati?", options: ["Beslutningsprosesser kan være trege på grunn av uenighet", "Det er ingen som har ansvar", "Lederen kan ikke kastes", "Folket har ingen makt"], answer: "Beslutningsprosesser kan være trege på grunn av uenighet", example: "Tregt beslutningssystem, uenighet." },
-            { question: "Hva kan ses på som en 'fordel' med diktatur?", options: ["Beslutninger kan tas veldig effektivt og raskt", "Alle har ytringsfrihet", "Lederen blir valgt av folket", "Det er stor grad av personlig frihet"], answer: "Beslutninger kan tas veldig effektivt og raskt", example: "Effektiv styring." },
-            { question: "Hva er den største ulempen med diktatur?", options: ["Mangel på frihet, rettigheter og undertrykkelse", "Det er vanskelig å vite hvem som bestemmer", "Det blir ofte for mange valg", "Lover og regler endres hele tiden"], answer: "Mangel på frihet, rettigheter og undertrykkelse", example: "Mangel på frihet og rettigheter." },
-            { question: "Hva er menneskerettigheter?", options: ["Universelle, grunnleggende rettigheter alle mennesker har", "Rettigheter som kun gjelder i Norge", "Regler for hvordan man skal oppføre seg", "En liste over plikter man har"], answer: "Universelle, grunnleggende rettigheter alle mennesker har", example: "Grunnleggende rettigheter for alle." },
-            { question: "Hva kjennetegner en rettsstat?", options: ["Likhet for loven og at ingen kan straffes uten lovlig dom", "At dommerne er valgt av politikerne", "At politiet kan dømme folk", "At rike folk får mildere straffer"], answer: "Likhet for loven og at ingen kan straffes uten lovlig dom", example: "Likhet for loven og rettssikkerhet." },
-            { question: "Hva betyr likeverd?", options: ["At alle mennesker har samme verdi uansett hvem de er", "At alle skal tjene like mye penger", "At alle må mene det samme", "At alle må se like ut"], answer: "At alle mennesker har samme verdi uansett hvem de er", example: "Alle har samme verdi." },
-            { question: "Hva er toleranse?", options: ["Å akseptere og respektere at folk er forskjellige og mener ulike ting", "Å være enig med alle", "Å overse ulovlige handlinger", "Å gi etter for press"], answer: "Å akseptere og respektere at folk er forskjellige og mener ulike ting", example: "Å akseptere ulikheter." },
-            { question: "Hva betyr parlamentarisme?", options: ["At regjeringen må ha støtte fra et flertall i parlamentet (Stortinget)", "At parlamentet bestemmer absolutt alt i landet", "At vi har en president i stedet for en konge", "At domstolene styrer regjeringen"], answer: "At regjeringen må ha støtte fra et flertall i parlamentet (Stortinget)", example: "Regjeringen må ha støtte i parlamentet." },
-            { question: "Hva er maktfordelingsprinsippet?", options: ["At makten deles mellom en lovgivende, en utøvende og en dømmende makt", "At all makt samles hos statsministeren", "At makten fordeles likt mellom alle innbyggere", "At militæret og politiet deler makten"], answer: "At makten deles mellom en lovgivende, en utøvende og en dømmende makt", example: "Makten deles i tre: lovgivende, utøvende, dømmende." },
-            { question: "Hvorfor kalles mediene noen ganger 'den fjerde statsmakt'?", options: ["Fordi de har en viktig rolle i å kontrollere de andre statsmaktene", "Fordi de er den mektigste institusjonen i landet", "Fordi det står i Grunnloven", "Fordi de eies av staten"], answer: "Fordi de har en viktig rolle i å kontrollere de andre statsmaktene", example: "Mediene som kontrollerer makten." },
-            { question: "Hvilke partier plasseres vanligvis på venstresiden i norsk politikk?", options: ["Rødt, SV og Arbeiderpartiet", "Høyre og Fremskrittspartiet", "Venstre og KrF", "Senterpartiet og MDG"], answer: "Rødt, SV og Arbeiderpartiet", example: "Rødt, SV, Arbeiderpartiet." },
-            { question: "Hvilke partier regnes ofte som sentrumspartier?", options: ["Senterpartiet, MDG, Venstre og KrF", "Arbeiderpartiet og Høyre", "Rødt og SV", "Kun Senterpartiet"], answer: "Senterpartiet, MDG, Venstre og KrF", example: "Senterpartiet, MDG, Venstre, KrF." },
-            { question: "Hvilke partier plasseres vanligvis på høyresiden i norsk politikk?", options: ["Høyre og Fremskrittspartiet", "Arbeiderpartiet og SV", "Venstre og MDG", "Rødt og Senterpartiet"], answer: "Høyre og Fremskrittspartiet", example: "Høyre, FrP." },
-            { question: "Hva er en ideologi?", options: ["Et helhetlig tankesett om hvordan samfunnet bør være og styres", "En liste over lover", "Et politisk partis slagord", "En type vitenskap"], answer: "Et helhetlig tankesett om hvordan samfunnet bør være og styres", example: "Tanker om hvordan samfunnet bør være." },
-            { question: "Hva kjennetegner typisk høyresiden i politikken?", options: ["Ønske om lavere skatter, mer privat ansvar og mindre statlig styring", "Ønske om en sterk stat som eier det meste og høye skatter", "Fokus på miljøvern fremfor alt annet", "At de vil melde Norge ut av alle internasjonale avtaler"], answer: "Ønske om lavere skatter, mer privat ansvar og mindre statlig styring", example: "Mindre stat, lavere skatter." },
-            { question: "Hva kjennetegner typisk venstresiden i politikken?", options: ["Ønske om en sterk velferdsstat, omfordeling og mer statlig styring", "Ønske om lavest mulig skatter og færrest mulig offentlige tjenester", "At de er imot alt av privat næringsliv", "Fokus på tradisjonelle verdier og nasjonalisme"], answer: "Ønske om en sterk velferdsstat, omfordeling og mer statlig styring", example: "Mer statlig ansvar, høyere skatter." },
-            { question: "Hvordan får staten inntekter?", options: ["Gjennom skatter, avgifter og inntekter fra Oljefondet", "Kun ved å selge olje", "Ved å låne penger fra andre land", "Ved å be om donasjoner fra innbyggerne"], answer: "Gjennom skatter, avgifter og inntekter fra Oljefondet", example: "Skatt, avgifter, oljefondet." },
-            { question: "Hva er et partiprogram?", options: ["En oversikt over hva et parti mener og vil gjøre hvis de får makt", "Et TV-program om et politisk parti", "En liste over medlemmene i partiet", "En plan for partiets neste fest"], answer: "En oversikt over hva et parti mener og vil gjøre hvis de får makt", example: "Plan for hvordan partiet vil styre." },
-            { question: "Hva er en partiliste ved valg?", options: ["En prioritert liste over kandidatene partiet stiller til valg med", "En liste over alle som har stemt på partiet", "En liste over partiets sponsorer", "En liste over saker partiet er imot"], answer: "En prioritert liste over kandidatene partiet stiller til valg med", example: "Liste over kandidater fra et parti." },
-            { question: "Hva er kravene for å kunne stemme ved valg i Norge?", options: ["Man må være norsk statsborger og ha fylt 18 år", "Man må ha jobb og betale skatt", "Man må ha bodd i Norge i minst 10 år", "Man må være medlem av et politisk parti"], answer: "Man må være norsk statsborger og ha fylt 18 år", example: "Norsk statsborgerskap og 18 år. i Stortingsvalg, kommunevalg har utenlandske lov etter å ha bodd i landet over lengre tid" },
-            { question: "Hva er flertallsvalg?", options: ["Et valgsystem der kandidaten med flest stemmer i en krets vinner mandatet", "Et system der alle partier får like mange representanter", "Et system der man stemmer over flere saker samtidig", "Et system som kun brukes i diktaturer"], answer: "Et valgsystem der kandidaten med flest stemmer i en krets vinner mandatet", example: "Den med flest stemmer vinner alt." },
-            { question: "Hva er forholdstallsvalg, som vi bruker i Norge?", options: ["Et system der mandater fordeles prosentvis etter partienes stemmetall", "Et system der den med flest personstemmer alltid vinner", "Et system der vinneren tar alt", "Et system der bare de to største partiene får representanter"], answer: "Et system der mandater fordeles prosentvis etter partienes stemmetall", example: "Mandater fordeles etter stemmetall." },
-            { question: "Hva er en fordel med flertallsvalg (som i USA/Storbritannia)?", options: ["Det gir ofte stabile flertallsregjeringer", "Det sikrer at mange små partier kommer inn", "Det oppleves som mest rettferdig av alle", "Det er veldig enkelt å telle opp stemmene"], answer: "Det gir ofte stabile flertallsregjeringer", example: "De har ofte to partier, som veksler mellom flertall. Eks. Republikanerne og Demokatene i USA" },
-            { question: "Hva er en ulempe med flertallsvalg?", options: ["Mange stemmer kan gå 'tapt' og små partier blir sjelden representert", "Det fører ofte til ustabile koalisjonsregjeringer", "Det er umulig å forutsi valgresultatet", "Det tar veldig lang tid å få et resultat"], answer: "Mange stemmer kan gå 'tapt' og små partier blir sjelden representert", example: "Få partier representert, ofte kun to partier som i USA." }
+            {
+                question: "Hva vil det si at demokratiet er under press?",
+                options: ["At demokratiske verdier som ytringsfrihet og frie valg svekkes", "At flere deltar i valg", "At økonomien blir sterkere", "At det blir færre politiske partier"],
+                answer: "At demokratiske verdier som ytringsfrihet og frie valg svekkes",
+                example: "Når politikere forsøker å begrense medienes frihet, eller når noen prøver å hindre folk i å stemme. For eksempel har det vært diskusjoner om ytringsfrihet og rettssikkerhet i USA."
+            },
+            {
+                question: "Hva er en stor utfordring med dagens store mengder informasjon?",
+                options: ["Det er vanskelig å skille mellom sann og usann informasjon", "Det er for dyrt å få tilgang til nyheter", "Det finnes for få informasjonskilder", "All informasjon er på engelsk"],
+                answer: "Det er vanskelig å skille mellom sann og usann informasjon",
+                example: "Falske nyheter på sosiale medier, som når noen sprer rykter om politikere eller hendelser som ikke har skjedd."
+            },
+            {
+                question: "Hva er demokratiet avhengig av for å overleve?",
+                options: ["Engasjerte borgere, frie medier og tillit", "En sterk leder og ett parti", "At ingen kritiserer regjeringen", "At alle er enige om alt"],
+                answer: "Engasjerte borgere, frie medier og tillit",
+                example: "At folk stemmer ved valg, at mediene kan rapportere fritt, og at folk har tillit til systemet."
+            },
+            {
+                question: "Hva er politikk og demokrati?",
+                options: ["Politikk er styring av samfunnet, demokrati er folkestyre", "Politikk er kun for politikere, demokrati er for alle", "Politikk og demokrati er det samme", "Demokrati er når kongen bestemmer"],
+                answer: "Politikk er styring av samfunnet, demokrati er folkestyre",
+                example: "Politikk handler om hvordan samfunnet styres, for eksempel hvordan skolen eller helsevesenet skal være. Demokrati betyr at alle kan være med å bestemme, for eksempel ved å stemme."
+            },
+            {
+                question: "Hvilke tre rettigheter nevnes ofte som sentrale i et demokrati?",
+                options: ["Ytringsfrihet, religionsfrihet, rett til privatliv", "Rett til gratis bil, hus og jobb", "Rett til å slippe skatt, plikt til å jobbe", "Rett til å bestemme over andre"],
+                answer: "Ytringsfrihet, religionsfrihet, rett til privatliv",
+                example: "Ytringsfrihet: du kan si hva du mener. Religionsfrihet: du kan tro på det du vil. Rett til privatliv: ingen kan snoke i livet ditt uten grunn."
+            },
+            {
+                question: "Hva har skjedd med demokratiene i land som USA, Tyrkia, Ungarn og Brasil de siste årene?",
+                options: ["Økt polarisering og svekkelse av institusjoner", "De har blitt mer stabile og samlet", "De har avskaffet valg", "De har blitt monarkier"],
+                answer: "Økt polarisering og svekkelse av institusjoner",
+                example: "Polarisering i USA, Erdogans maktkonsentrasjon i Tyrkia."
+            },
+            {
+                question: "Hva er et valg?",
+                options: ["En prosess der folket velger sine representanter", "En dag der alle har fri fra jobben", "En konkurranse om å bli konge", "En religiøs seremoni"],
+                answer: "En prosess der folket velger sine representanter",
+                example: "Stortingsvalg, Fylkestingsvalg, Kommunestyrevalg."
+            },
+            {
+                question: "Hvem har stemmerett ved stortingsvalg i Norge?",
+                options: ["Norske statsborgere over 18 år", "Alle som bor i Norge", "Bare de som eier hus", "Bare de som har fullført universitetet"],
+                answer: "Norske statsborgere over 18 år",
+                example: "Norske statsborgere over 18 år."
+            },
+            {
+                question: "Hva er et politisk parti?",
+                options: ["En gruppe mennesker med felles politiske mål", "En klubb for de som liker å diskutere", "Alle som jobber på Stortinget", "En gruppe som arrangerer fester"],
+                answer: "En gruppe mennesker med felles politiske mål",
+                example: "SV jobber for miljø og sosial rettferdighet, mens Høyre fokuserer på næringsliv og lavere skatter, Frp på innvandring og lov og orden"
+            },
+            {
+                question: "Hvordan kan vanlige folk påvirke politikere?",
+                options: ["Ved å stemme, demonstrere og skrive innlegg", "Kun ved å sende dem personlige gaver", "Ved å bli politiker selv", "Det er ikke mulig å påvirke politikere"],
+                answer: "Ved å stemme, demonstrere og skrive innlegg",
+                example: "Delta i valg, demonstrasjoner, skrive leserinnlegg."
+            },
+            {
+                question: "Hva betyr kildebevissthet?",
+                options: ["Å være klar over hvor informasjonen kommer fra", "Å kunne alle kilder utenat", "Å bare stole på én kilde", "Å lage sine egne kilder"],
+                answer: "Å være klar over hvor informasjonen kommer fra",
+                example: "Skille mellom NRK og TikTok"
+            },
+            {
+                question: "Hva er kildekritikk?",
+                options: ["Å vurdere om en kilde er troverdig", "Å kritisere alle kilder man finner", "Å godta all informasjon som sann", "Å kun lese bøker"],
+                answer: "Å vurdere om en kilde er troverdig",
+                example: "Sjekke hvem som har skrevet artikkelen og om den er sann eller falsk."
+            },
+            {
+                question: "Hva er kildetillit?",
+                options: ["Å ha tillit til kilder med god historikk for å være pålitelige", "Å stole blindt på alt man leser på internett", "Å aldri stole på noen kilder", "Å bare stole på venner"],
+                answer: "Å ha tillit til kilder med god historikk for å være pålitelige",
+                example: "Store norske leksikon."
+            },
+            {
+                question: "Hvorfor er frie og uavhengige medier viktige i et demokrati?",
+                options: ["De kontrollerer makthaverne og informerer folket", "De forteller regjeringen hva den skal gjøre", "De publiserer bare positive nyheter", "De er eid og styrt av staten"],
+                answer: "De kontrollerer makthaverne og informerer folket",
+                example: "Avsløringer om korrupsjon."
+            },
+            {
+                question: "Hva er algoritmer i sosiale medier?",
+                options: ["Programmer som styrer hvilket innhold du ser", "Regler for god oppførsel på nett", "Personer som sletter stygge kommentarer", "Passordet du bruker for å logge inn"],
+                answer: "Programmer som styrer hvilket innhold du ser",
+                example: "TikTok viser deg lignende videoer."
+            },
+            {
+                question: "Hva kan være negativt med algoritmer?",
+                options: ["De kan skape ekkokamre og polarisering", "De gjør internett tregere", "De koster penger å bruke", "De viser bare reklame"],
+                answer: "De kan skape ekkokamre og polarisering",
+                example: "Du ser bare én side av en sak. Eks trump-tilhengere på Facebook"
+            },
+            {
+                question: "Hva gjør en politisk kommentator?",
+                options: ["Analyserer og forklarer politikk for publikum", "Bestemmer hva politikerne skal mene", "Er en politiker som kommenterer andre", "Lager lover og regler"],
+                answer: "Analyserer og forklarer politikk for publikum",
+                example: "Kommentator i VG."
+            },
+            {
+                question: "Hva kjennetegner en god sosial gruppe?",
+                options: ["Den er inkluderende og viser respekt for alle", "Alle i gruppen er helt like", "Gruppen har en streng leder som bestemmer alt", "Den er eksklusiv og vanskelig å bli med i"],
+                answer: "Den er inkluderende og viser respekt for alle",
+                example: "Klasse som støtter hverandre."
+            },
+            {
+                question: "Hva kjennetegner en dårlig sosial gruppe?",
+                options: ["Den ekskluderer, baksnakker og skaper press", "Den er åpen for alle", "Alle får si sin mening", "Den hjelper andre utenfor gruppen"],
+                answer: "Den ekskluderer, baksnakker og skaper press",
+                example: "Gruppe som mobber. Kriminelle gjenger."
+            },
+            {
+                question: "Hva er skjult valgpåvirkning?",
+                options: ["Forsøk på å manipulere velgere uten at de merker det", "Vanlige valgplakater og reklamer", "Politiske debatter på TV", "Åpent å si hvem man bør stemme på"],
+                answer: "Forsøk på å manipulere velgere uten at de merker det",
+                example: "Falske annonser, skjult støtte til partier, bots på sosiale medier."
+            },
+            {
+                question: "Hva er et eksempel på ulovlig valgpåvirkning?",
+                options: ["Å true eller kjøpe stemmer", "Å henge opp en valgplakat", "Å dele en artikkel fra et parti", "Å diskutere politikk med en venn"],
+                answer: "Å true eller kjøpe stemmer",
+                example: "Brudd på lover, som kjøp av stemmer. Flere stemmer enn antall personer."
+            },
+            {
+                question: "Hvordan kan kunstig intelligens (KI) påvirke valg?",
+                options: ["Ved å lage og spre falske videoer (deepfakes) og desinformasjon", "Ved å telle opp stemmene raskere og mer nøyaktig", "Ved å gjøre det enklere å registrere seg for å stemme", "Ved å skrive partiprogrammer"],
+                answer: "Ved å lage og spre falske videoer (deepfakes) og desinformasjon",
+                example: "Deepfake-videoer."
+            },
+            {
+                question: "Hva bør man være obs på ved bruk av tall og grafer i politisk argumentasjon?",
+                options: ["De kan være valgt ut for å være misvisende", "De er alltid 100% objektive og sanne", "De er for kompliserte for vanlige folk å forstå", "De er som regel falske"],
+                answer: "De kan være valgt ut for å være misvisende",
+                example: "Grafer som manipulerer skala for å overdrive forskjeller, eller utelater viktige data."
+            },
+            {
+                question: "Hva er et demokrati?",
+                options: ["Et folkestyre med frie valg og grunnleggende rettigheter", "Et system der den rikeste personen styrer", "Et land uten en regjering", "Et styre basert på militærmakt"],
+                answer: "Et folkestyre med frie valg og grunnleggende rettigheter",
+                example: "Folkestyre med frie valg og rettigheter."
+            },
+            {
+                question: "Hva er et diktatur?",
+                options: ["En styreform der én person eller en liten gruppe har all makt", "En styreform der alle avgjørelser tas ved folkeavstemning", "Et annet ord for monarki", "Et land med mange politiske partier"],
+                answer: "En styreform der én person eller en liten gruppe har all makt",
+                example: "Styreform der én eller få har all makt."
+            },
+            {
+                question: "Hva er en typisk fordel med demokrati?",
+                options: ["Det sikrer innbyggerne frihet, rettigheter og deltakelse", "Avgjørelser tas alltid veldig raskt", "Alle er alltid enige", "Det er den billigste styreformen"],
+                answer: "Det sikrer innbyggerne frihet, rettigheter og deltakelse",
+                example: "Frihet, rettigheter, deltakelse."
+            },
+            {
+                question: "Hva kan være en ulempe med demokrati?",
+                options: ["Beslutningsprosesser kan være trege på grunn av uenighet", "Det er ingen som har ansvar", "Lederen kan ikke kastes", "Folket har ingen makt"],
+                answer: "Beslutningsprosesser kan være trege på grunn av uenighet",
+                example: "Tregt beslutningssystem, uenighet."
+            },
+            {
+                question: "Hva kan ses på som en 'fordel' med diktatur?",
+                options: ["Beslutninger kan tas veldig effektivt og raskt", "Alle har ytringsfrihet", "Lederen blir valgt av folket", "Det er stor grad av personlig frihet"],
+                answer: "Beslutninger kan tas veldig effektivt og raskt",
+                example: "Effektiv styring."
+            },
+            {
+                question: "Hva er den største ulempen med diktatur?",
+                options: ["Mangel på frihet, rettigheter og undertrykkelse", "Det er vanskelig å vite hvem som bestemmer", "Det blir ofte for mange valg", "Lover og regler endres hele tiden"],
+                answer: "Mangel på frihet, rettigheter og undertrykkelse",
+                example: "Mangel på frihet og rettigheter."
+            },
+            {
+                question: "Hva er menneskerettigheter?",
+                options: ["Universelle, grunnleggende rettigheter alle mennesker har", "Rettigheter som kun gjelder i Norge", "Regler for hvordan man skal oppføre seg", "En liste over plikter man har"],
+                answer: "Universelle, grunnleggende rettigheter alle mennesker har",
+                example: "Grunnleggende rettigheter for alle."
+            },
+            {
+                question: "Hva kjennetegner en rettsstat?",
+                options: ["Likhet for loven og at ingen kan straffes uten lovlig dom", "At dommerne er valgt av politikerne", "At politiet kan dømme folk", "At rike folk får mildere straffer"],
+                answer: "Likhet for loven og at ingen kan straffes uten lovlig dom",
+                example: "Likhet for loven og rettssikkerhet."
+            },
+            {
+                question: "Hva betyr likeverd?",
+                options: ["At alle mennesker har samme verdi uansett hvem de er", "At alle skal tjene like mye penger", "At alle må mene det samme", "At alle må se like ut"],
+                answer: "At alle mennesker har samme verdi uansett hvem de er",
+                example: "Alle har samme verdi."
+            },
+            {
+                question: "Hva er toleranse?",
+                options: ["Å akseptere og respektere at folk er forskjellige og mener ulike ting", "Å være enig med alle", "Å overse ulovlige handlinger", "Å gi etter for press"],
+                answer: "Å akseptere og respektere at folk er forskjellige og mener ulike ting",
+                example: "Å akseptere ulikheter."
+            },
+            {
+                question: "Hva betyr parlamentarisme?",
+                options: ["At regjeringen må ha støtte fra et flertall i parlamentet (Stortinget)", "At parlamentet bestemmer absolutt alt i landet", "At vi har en president i stedet for en konge", "At domstolene styrer regjeringen"],
+                answer: "At regjeringen må ha støtte fra et flertall i parlamentet (Stortinget)",
+                example: "Regjeringen må ha støtte i parlamentet."
+            },
+            {
+                question: "Hva er maktfordelingsprinsippet?",
+                options: ["At makten deles mellom en lovgivende, en utøvende og en dømmende makt", "At all makt samles hos statsministeren", "At makten fordeles likt mellom alle innbyggere", "At militæret og politiet deler makten"],
+                answer: "At makten deles mellom en lovgivende, en utøvende og en dømmende makt",
+                example: "Makten deles i tre: lovgivende, utøvende, dømmende."
+            },
+            {
+                question: "Hvorfor kalles mediene noen ganger 'den fjerde statsmakt'?",
+                options: ["Fordi de har en viktig rolle i å kontrollere de andre statsmaktene", "Fordi de er den mektigste institusjonen i landet", "Fordi det står i Grunnloven", "Fordi de eies av staten"],
+                answer: "Fordi de har en viktig rolle i å kontrollere de andre statsmaktene",
+                example: "Mediene som kontrollerer makten."
+            },
+            {
+                question: "Hvilke partier plasseres vanligvis på venstresiden i norsk politikk?",
+                options: ["Rødt, SV og Arbeiderpartiet", "Høyre og Fremskrittspartiet", "Venstre og KrF", "Senterpartiet og MDG"],
+                answer: "Rødt, SV og Arbeiderpartiet",
+                example: "Rødt, SV, Arbeiderpartiet."
+            },
+            {
+                question: "Hvilke partier regnes ofte som sentrumspartier?",
+                options: ["Senterpartiet, MDG, Venstre og KrF", "Arbeiderpartiet og Høyre", "Rødt og SV", "Kun Senterpartiet"],
+                answer: "Senterpartiet, MDG, Venstre og KrF",
+                example: "Senterpartiet, MDG, Venstre, KrF."
+            },
+            {
+                question: "Hvilke partier plasseres vanligvis på høyresiden i norsk politikk?",
+                options: ["Høyre og Fremskrittspartiet", "Arbeiderpartiet og SV", "Venstre og MDG", "Rødt og Senterpartiet"],
+                answer: "Høyre og Fremskrittspartiet",
+                example: "Høyre, FrP."
+            },
+            {
+                question: "Hva er en ideologi?",
+                options: ["Et helhetlig tankesett om hvordan samfunnet bør være og styres", "En liste over lover", "Et politisk partis slagord", "En type vitenskap"],
+                answer: "Et helhetlig tankesett om hvordan samfunnet bør være og styres",
+                example: "Tanker om hvordan samfunnet bør være."
+            },
+            {
+                question: "Hva kjennetegner typisk høyresiden i politikken?",
+                options: ["Ønske om lavere skatter, mer privat ansvar og mindre statlig styring", "Ønske om en sterk stat som eier det meste og høye skatter", "Fokus på miljøvern fremfor alt annet", "At de vil melde Norge ut av alle internasjonale avtaler"],
+                answer: "Ønske om lavere skatter, mer privat ansvar og mindre statlig styring",
+                example: "Mindre stat, lavere skatter."
+            },
+            {
+                question: "Hva kjennetegner typisk venstresiden i politikken?",
+                options: ["Ønske om en sterk velferdsstat, omfordeling og mer statlig styring", "Ønske om lavest mulig skatter og færrest mulig offentlige tjenester", "At de er imot alt av privat næringsliv", "Fokus på tradisjonelle verdier og nasjonalisme"],
+                answer: "Ønske om en sterk velferdsstat, omfordeling og mer statlig styring",
+                example: "Mer statlig ansvar, høyere skatter."
+            },
+            {
+                question: "Hvordan får staten inntekter?",
+                options: ["Gjennom skatter, avgifter og inntekter fra Oljefondet", "Kun ved å selge olje", "Ved å låne penger fra andre land", "Ved å be om donasjoner fra innbyggerne"],
+                answer: "Gjennom skatter, avgifter og inntekter fra Oljefondet",
+                example: "Skatt, avgifter, oljefondet."
+            },
+            {
+                question: "Hva er et partiprogram?",
+                options: ["En oversikt over hva et parti mener og vil gjøre hvis de får makt", "Et TV-program om et politisk parti", "En liste over medlemmene i partiet", "En plan for partiets neste fest"],
+                answer: "En oversikt over hva et parti mener og vil gjøre hvis de får makt",
+                example: "Plan for hvordan partiet vil styre."
+            },
+            {
+                question: "Hva er en partiliste ved valg?",
+                options: ["En prioritert liste over kandidatene partiet stiller til valg med", "En liste over alle som har stemt på partiet", "En liste over partiets sponsorer", "En liste over saker partiet er imot"],
+                answer: "En prioritert liste over kandidatene partiet stiller til valg med",
+                example: "Liste over kandidater fra et parti."
+            },
+            {
+                question: "Hva er kravene for å kunne stemme ved valg i Norge?",
+                options: ["Man må være norsk statsborger og ha fylt 18 år", "Man må ha jobb og betale skatt", "Man må ha bodd i Norge i minst 10 år", "Man må være medlem av et politisk parti"],
+                answer: "Man må være norsk statsborger og ha fylt 18 år",
+                example: "Norsk statsborgerskap og 18 år. i Stortingsvalg, kommunevalg har utenlandske lov etter å ha bodd i landet over lengre tid"
+            },
+            {
+                question: "Hva er flertallsvalg?",
+                options: ["Et valgsystem der kandidaten med flest stemmer i en krets vinner mandatet", "Et system der alle partier får like mange representanter", "Et system der man stemmer over flere saker samtidig", "Et system som kun brukes i diktaturer"],
+                answer: "Et valgsystem der kandidaten med flest stemmer i en krets vinner mandatet",
+                example: "Den med flest stemmer vinner alt."
+            },
+            {
+                question: "Hva er forholdstallsvalg, som vi bruker i Norge?",
+                options: ["Et system der mandater fordeles prosentvis etter partienes stemmetall", "Et system der den med flest personstemmer alltid vinner", "Et system der vinneren tar alt", "Et system der bare de to største partiene får representanter"],
+                answer: "Et system der mandater fordeles prosentvis etter partienes stemmetall",
+                example: "Mandater fordeles etter stemmetall."
+            },
+            {
+                question: "Hva er en fordel med flertallsvalg (som i USA/Storbritannia)?",
+                options: ["Det gir ofte stabile flertallsregjeringer", "Det sikrer at mange små partier kommer inn", "Det oppleves som mest rettferdig av alle", "Det er veldig enkelt å telle opp stemmene"],
+                answer: "Det gir ofte stabile flertallsregjeringer",
+                example: "De har ofte to partier, som veksler mellom flertall. Eks. Republikanerne og Demokatene i USA"
+            },
+            {
+                question: "Hva er en ulempe med flertallsvalg?",
+                options: ["Mange stemmer kan gå 'tapt' og små partier blir sjelden representert", "Det fører ofte til ustabile koalisjonsregjeringer", "Det er umulig å forutsi valgresultatet", "Det tar veldig lang tid å få et resultat"],
+                answer: "Mange stemmer kan gå 'tapt' og små partier blir sjelden representert",
+                example: "Få partier representert, ofte kun to partier som i USA."
+            }
         ];
 
         const quizAreaEl = document.getElementById('quiz-area');
